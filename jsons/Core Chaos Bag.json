@@ -303,7 +303,8 @@
                         ["DO_LOG", "$LOG_EVENT", "$ACTOR_PLAYER", "$TARGET_PLAYER", "add {{$TO_ADD}} {{$CHAOS_TOKEN_NAME}} Chaos Tokens to the Chaos Bag.", "adds {{$TO_ADD}} {{$CHAOS_TOKEN_NAME}} Chaos Tokens to the Chaos Bag."],
                         ["DO_CREATE_CARDS", "$TARGET_PLAYER", "{{$CHAOS_TOKEN_NAME}} Chaos Token", "$CHAOS_TOKEN_DATABASE_ID", "$TO_ADD", "sharedChaosBag", false, "$ACTOR_PLAYER"]
                     ]
-                ]
+                ],
+                ["DEFINE", "$DO_ADD_CHAOS_TOKENS_RESULT", "$TO_ADD"]
             ]
         },
         "DO_ADD_CHAOS_TOKENS_ACT": {
@@ -367,7 +368,8 @@
                             ["DO_DELETE_CARD", "$TARGET_PLAYER", ["GET_CHAOS_TOKEN_BAG_CARD_ID", "$CHAOS_TOKEN_NAME"], false, "$ACTOR_PLAYER"]
                         ]]
                     ]
-                ]
+                ],
+                ["DEFINE", "$DO_REMOVE_CHAOS_TOKENS_RESULT", "$TO_REMOVE"]
             ]
         },
         "DO_REMOVE_CHAOS_TOKENS_ACT": {

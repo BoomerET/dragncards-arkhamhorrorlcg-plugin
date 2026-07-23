@@ -1,0 +1,183 @@
+{
+    "preBuiltDecks": {
+        "Dealings in the Dark Scenario": {
+            "label": "Dealings in the Dark Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Dealings in the Dark", "Dealings in the Dark Scenario Early Init", "Dealings in the Dark Scenario Init"]
+            ]
+        },
+        "Dealings in the Dark": {
+            "hideFromSearch": true,
+            "label": "Dealings in the Dark",
+            "cards": [
+                {"databaseId": "09566", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Dealings in the Dark
+                {"databaseId": "09567", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Agents of the Dark
+                {"databaseId": "09568", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Search for the Manuscript
+                {"databaseId": "09569", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Search for the Talisman
+                {"databaseId": "09571", "quantity": 1, "loadGroupId": "sharedLocations", "left": "1%", "top": "4%"},    //The Unveiling
+                {"databaseId": "09577", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Darkened Alley
+                {"databaseId": "09578", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Public Baths
+                {"databaseId": "09579", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Marble Fountain
+                {"databaseId": "09580", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Crowded Shops
+                {"databaseId": "09581", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Busy Walkway
+                {"databaseId": "09582", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Rooftop Access
+                {"databaseId": "09583", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Jewelers' Road
+                {"databaseId": "09585", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Umbral Harbinger
+                {"databaseId": "09584", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                           //Ece Şahin: The Vermillion-Veiled Lady
+                {"databaseId": "09586a", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                          //Sinister Aspirant (A)
+                {"databaseId": "09586b", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                          //Sinister Aspirant (B)
+                {"databaseId": "09586c", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                          //Sinister Aspirant (C)
+                {"databaseId": "09587", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Shadowed
+                {"databaseId": "09588", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Accosted
+                {"databaseId": "09589", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}                            //Light Out of Void
+            ]
+        },
+        "Dealings in the Dark - Rest": {
+            "hideFromSearch": true,
+            "label": "Dealings in the Dark - Rest",
+            "cards": [
+                {"databaseId": "09575", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "24%"},  //Istanbul University
+                {"databaseId": "09573", "quantity": 1, "loadGroupId": "sharedLocations", "left": "14%", "top": "43%"},  //Galata
+                {"databaseId": "09576", "quantity": 1, "loadGroupId": "sharedLocations", "left": "38%", "top": "43%"},  //Hagia Sophia
+                {"databaseId": "09574", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "62%"},  //Obelisk of Theodosius
+                {"databaseId": "09572", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Galata Docks
+                {"databaseId": "09590a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Twisted Antiprism: Talisman of Infinite Darkness
+                {"databaseId": "09570", "quantity": 1, "loadGroupId": "sharedNotInPlay"}                                //The Chase
+            ]
+        }
+    },
+    "actionLists": {
+        "Dealings in the Dark Scenario Early Init": [
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Decide.", ["LIST", "“All right. We will find it and place it in your care.”", "“All right. We will find it and place it in your care.” (You are lying.)", "“We will track down this talisman, but we will be taking it into our custody.”"], "Dealings in the Dark Scenario Early Init Continue 1"]
+        ],
+        "Dealings in the Dark Scenario Early Init Continue 1": [
+            ["LOG", "└── Decision: {{$GAME.arkham.scenarioAnswer1Text}}"],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["LOG", "└── Campaign Log: Record “the cell is working with Ece.”"],
+                    ["SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS", "chaos_elder_thing", "chaos_tablet"]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "B"],
+                [
+                    ["LOG", "└── Campaign Log: Record “the cell is deceiving Ece.”"],
+                    ["SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS", "chaos_tablet", "chaos_elder_thing"]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "C"],
+                ["LOG", "└── Campaign Log: Record “the cell refused Ece’s offer.”"]
+            ],
+            ["SCENARIO_INIT_RESUME", "Dealings in the Dark Scenario Init"]
+        ],
+        "Dealings in the Dark Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Dealings in the Dark"],
+            ["DO_LOAD_CARDS_SCN", "Agents of Yuggoth"],
+            ["DO_LOAD_CARDS_SCN", "Dark Veiling"],
+            ["DO_LOAD_CARDS_SCN", "Ancient Evils"],
+            ["DO_LOAD_CARDS_SCN", "Dark Cult"],
+            ["DO_LOAD_CARDS_SCN", "Locked Doors"],
+            ["DO_LOAD_CARDS_SCN", "The Midnight Masks - Treacheries"],
+            ["CALCULATOR_PROMPT", "$GAME.firstPlayer", "Enter time passed", 1, 30, 0, "DEALINGS_IN_THE_DARK_TIME_CALLBACK", "$GAME.firstPlayer", "", ""]
+        ],
+        "Dealings in the Dark Scenario Init Continue 1": [
+            ["VAR", "$TO_ADD", 0],
+            ["COND",
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDealingsInTheDarkTimePassed", 25],
+                ["UPDATE_VAR", "$TO_ADD", ["MULTIPLY", "$GAME.arkham.numPlayers", 2]],
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDealingsInTheDarkTimePassed", 18],
+                ["UPDATE_VAR", "$TO_ADD", "$GAME.arkham.numPlayers"],
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDealingsInTheDarkTimePassed", 11],
+                ["UPDATE_VAR", "$TO_ADD", ["HALF_ROUNDING_UP", "$GAME.arkham.numPlayers"]]
+            ],
+            ["COND",
+                ["GREATER_THAN", "$TO_ADD", 0],
+                ["DO_PLACE_CLUES_ON_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09571"], "$TO_ADD", true, null] //The Unveiling
+            ],
+            ["DO_MOVE_NAMED_DECK_CARDS_SCN", "Emissary from Yuggoth", "sharedEncounterDeck", 1, "sharedNotInPlay"],
+            ["DO_LOAD_CARDS_SCN", "Dealings in the Dark - Rest"],
+            ["DO_SET_SPAWN_LOCATION", "09572", 2, 43], //Galata Docks
+            ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Hagia Sophia", 5, 7, 3, 0],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["PROMPT", "$GAME.firstPlayer", "dealingsInTheDarkChooseEceController"],
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["VAR", "$ALIAS_I", ["GET_ALIAS", "$PLAYER_I"]],
+                        ["VAR", "$LETTER", ["SUBSTRING", "$PLAYER_I", 6, 1]],
+                        ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "{{$ALIAS_I}}.", "{{$LETTER}}", ["LIST", "DEALINGS_IN_THE_DARK_ECE_CHOICE", "{{$GAME.firstPlayer}}", "{{$PLAYER_I}}", "1"]]
+                    ]]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "C"],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09584"], true, null], //Ece Şahin: The Vermillion-Veiled Lady
+                    ["ACTION_LIST", "Dealings in the Dark Scenario Init Continue 2"]
+                ],
+                ["TRUE"],
+                ["ACTION_LIST", "Dealings in the Dark Scenario Init Continue 2"]
+            ]
+        ],
+        "Dealings in the Dark Scenario Init Continue 2": [
+            ["VAR", "$CULTISTS", ["SHUFFLE_LIST", ["CARDS_TO_CARD_IDS", ["FILTER_CARDS", "$CARD", ["AND",
+                ["EQUAL", "$CARD.groupId", "sharedEncounterDeck"],
+                ["IN_STRING", "$CARD.sides.A.traits", "Cultist."]
+            ]]]]],
+            ["FOR_EACH_VAL", "$CULTIST_ID", "$CULTISTS", [
+                ["VAR", "$CULTIST", "$CARD_BY_ID.$CULTIST_ID"],
+                ["COND",
+                    ["AND",
+                        ["EQUAL", "$CULTIST.sides.A.concealed", 0],
+                        ["NOT_EQUAL", "$CULTIST.sides.A.concealedId", null]
+                    ],
+                    ["SET", "/cardById/$CULTIST_ID/sides/A/concealed", 1]
+                ]
+            ]],
+            ["VAR", "$I", 0],
+            ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                ["DO_PUT_INTO_PLAY_SCN", "$CULTISTS.[$I]", ["GET_CONTROLLER_THREAT", "$PLAYER_I"]],
+                ["INCREASE_VAR", "$I", 1]
+            ]],
+            ["SET", "/arkham/finalScenarioMessage", "Grand Bazaar locations are in Deck A. Off Map is “the shadows” (in play). See “Location Adjacency in the Grand Bazaar” and “Acolyte Concealed Mini-cards. In player order, each investigator must resolve the concealed keyword (as granted by agenda 1a) on the Cultist enemy in their Threat.”"],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    },
+    "functions": {
+        "DEALINGS_IN_THE_DARK_TIME_CALLBACK": {
+            "args": ["$TARGET_PLAYER", "$TARGET_CARD_ID", "$ARGS", "$ACTOR_PLAYER", "$SELECTED_VALUE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DEALINGS_IN_THE_DARK_TIME_CALLBACK.TARGET_PLAYER"],
+                ["VALIDATE_NOT_NULL", "$ARGS", "DEALINGS_IN_THE_DARK_TIME_CALLBACK.ARGS"],
+                ["VALIDATE_NOT_EMPTY", "$SELECTED_VALUE", "DEALINGS_IN_THE_DARK_TIME_CALLBACK.SELECTED_VALUE"],
+                ["VAR", "$VALUE", ["CALC", "{{$SELECTED_VALUE}}"]],
+                ["VALIDATE_GT0", "$VALUE", "DEALINGS_IN_THE_DARK_TIME_CALLBACK.SELECTED_VALUE"],
+                ["SET", "/arkham/scenarioDealingsInTheDarkTimePassed", "$VALUE"],
+                ["LOGF", "{0}{1} set time passed to {2}.", "$ARGS", "$TARGET_PLAYER", "$VALUE"],
+                ["ACTION_LIST", "Dealings in the Dark Scenario Init Continue 1"]
+            ]
+        },
+        "DEALINGS_IN_THE_DARK_ECE_CHOICE": {
+            "args": ["$TARGET_PLAYER", "$CONTROLLER_PLAYER", "$LOG_MESSAGE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DEALINGS_IN_THE_DARK_ECE_CHOICE.TARGET_PLAYER"],
+                ["VALIDATE_PLAYER", "$CONTROLLER_PLAYER", "DEALINGS_IN_THE_DARK_ECE_CHOICE.CONTROLLER_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$LOG_MESSAGE", "DEALINGS_IN_THE_DARK_ECE_CHOICE.LOG_MESSAGE"],
+                ["COND",
+                    ["EQUAL", "$LOG_MESSAGE", "1"],
+                    ["LOGF", "{0} selected {1} to take control of Ece Şahin.", "$TARGET_PLAYER", "$CONTROLLER_PLAYER"]
+                ],
+                ["DO_PUT_INTO_PLAY_SCN", ["GET_NAMED_CARD_ID", "09584"], ["GET_CONTROLLER_PLAY", "$CONTROLLER_PLAYER"]], //Ece Şahin: The Vermillion-Veiled Lady
+                ["ACTION_LIST", "Dealings in the Dark Scenario Init Continue 2"]
+            ]
+        }
+    },
+    "prompts": {
+        "dealingsInTheDarkChooseEceController": {
+            "args": [],
+            "message": "Select the investigator to take control of Ece Şahin.",
+            "options": [
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;

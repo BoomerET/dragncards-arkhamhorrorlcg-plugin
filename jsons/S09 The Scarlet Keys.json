@@ -262,7 +262,10 @@
                 ["VAR", "$RED_GLOVED_MAN", ["GET_NAMED_PLAYER_DECK_CARD", "02310"]],
                 ["COND",
                     ["EQUAL", "$RED_GLOVED_MAN", null],
-                    ["SCENARIO_INIT", "The Scarlet Keys", "The Scarlet Keys", "$SCENARIO_NAME", "$SCENARIO_EARLY_ACTION", "$SCENARIO_ACTION"],
+                    [
+                        ["SET", "/arkham/scarletKeysExtraExp", 0],
+                        ["SCENARIO_INIT", "The Scarlet Keys", "The Scarlet Keys", "$SCENARIO_NAME", "$SCENARIO_EARLY_ACTION", "$SCENARIO_ACTION"]
+                    ],
                     ["TRUE"],
                     ["LOG", "└── While playing this campaign, investigators cannot purchase or include The Red-Gloved Man asset (The Dunwich Legacy card 310) in their decks."]
                 ]
@@ -275,7 +278,6 @@
                 ["VALIDATE_PLAYER", "$TARGET_PLAYER", "SCARLET_KEYS_CAN_CONCEAL.TARGET_PLAYER"],
                 ["VAR", "$TARGET_CARD", ["GET_CARD_AND_VALIDATE", "$TARGET_CARD_ID", "SCARLET_KEYS_CAN_CONCEAL.TARGET_CARD_ID"]],
                 ["AND",
-                    ["EQUAL", "$GAME.arkham.scenarioInit", false],
                     ["NOT_EQUAL", "$TARGET_CARD.currentFace.concealed", 0],
                     ["NOT_EQUAL", "$TARGET_CARD.currentFace.concealedId", null],
                     ["NOT_EQUAL", "$TARGET_CARD.currentFace.concealedId", ""],
@@ -430,6 +432,20 @@
                     ["SET", "/cardById/$SELECTED_CARDS.[$I].id/sides/A/imageUrl", "$DATA.[$I].imageUrl"]
                 ]],
                 ["LOGF", "└── {0} randomized {1} concealed mini-cards.", "$TARGET_PLAYER", "$NUM"]
+            ]
+        },
+        //removes a chaos token and adds another, recording if adding it was successful in scarletKeysExtraExp variable
+        "SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS": {
+            "args": ["$TOKEN_TO_REMOVE", "$TOKEN_TO_ADD"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$TOKEN_TO_REMOVE", "SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS.TOKEN_TO_REMOVE"],
+                ["VALIDATE_NOT_EMPTY", "$TOKEN_TO_ADD", "SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS.TOKEN_TO_ADD"],
+                ["DO_REMOVE_CHAOS_TOKENS_SCN", "$TOKEN_TO_REMOVE", 1],
+                ["DO_ADD_CHAOS_TOKENS_SCN", "$TOKEN_TO_ADD", 1],
+                ["COND",
+                    ["EQUAL", "$DO_ADD_CHAOS_TOKENS_RESULT", 0],
+                    ["SET", "/arkham/scarletKeysExtraExp", 1]
+                ]
             ]
         }
     },

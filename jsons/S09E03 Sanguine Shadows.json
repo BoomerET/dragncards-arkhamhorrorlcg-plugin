@@ -1,0 +1,86 @@
+{
+    "preBuiltDecks": {
+        "Sanguine Shadows Scenario": {
+            "label": "Sanguine Shadows Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Sanguine Shadows", "Sanguine Shadows Scenario Early Init", "Sanguine Shadows Scenario Init"]
+            ]
+        },
+        "Sanguine Shadows": {
+            "hideFromSearch": true,
+            "label": "Sanguine Shadows",
+            "cards": [
+                {"databaseId": "09545", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Sanguine Shadows
+                {"databaseId": "09546", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Where is She...?
+                {"databaseId": "09547", "quantity": 1, "loadGroupId": "sharedActStory"},                                //The Scarlet Shadow
+                {"databaseId": "09548", "quantity": 1, "loadGroupId": "sharedActStory"},                                //In the Searchlight
+                {"databaseId": "09549", "quantity": 1, "loadGroupId": "sharedLocations", "left": "45%", "top": "43%"},  //Avenida de Mayo
+                {"databaseId": "09557", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //La Chica Roja: The Girl in the Carmine Coat
+                {"databaseId": "09563", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //The Sanguine Watcher: With the Ruby Spectacles
+                {"databaseId": "09564", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Apportioned Ka
+                {"databaseId": "09562", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Seeing Red
+                {"databaseId": "09565a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Weeping Lady: Broken Statuette
+                {"databaseId": "09558", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Bound Nightgaunt
+                {"databaseId": "09559", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Cat and Mouse
+                {"databaseId": "09560", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Calling Card
+                {"databaseId": "09561", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}                            //Outsmarted
+            ]
+        }
+    },
+    "actionLists": {
+        "Sanguine Shadows Scenario Early Init": [
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Decide.", ["LIST", "Tell Bolívar everything regarding the target.", "Give Bolívar some breadcrumbs.", "Insist that Bolívar tells you what he knows."], "Sanguine Shadows Scenario Early Init Continue 1"]
+        ],
+        "Sanguine Shadows Scenario Early Init Continue 1": [
+            ["LOG", "└── Decision: {{$GAME.arkham.scenarioAnswer1Text}}"],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["LOG", "└── Campaign Log: Remember that “Matias Bolívar trusts you.”"],
+                    ["SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS", "chaos_elder_thing", "chaos_tablet"]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "C"],
+                [
+                    ["LOG", "└── Campaign Log: Remember that “Matias Bolívar doesn’t trust you.”"],
+                    ["SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS", "chaos_tablet", "chaos_elder_thing"]
+                ]
+            ],
+            ["SCENARIO_INIT_RESUME", "Sanguine Shadows Scenario Init"]
+        ],
+        "Sanguine Shadows Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Sanguine Shadows"],
+            ["DO_LOAD_CARDS_SCN", "Dark Veiling"],
+            ["DO_LOAD_CARDS_SCN", "Mysteries Abound"],
+            ["DO_LOAD_CARDS_SCN", "Shadow of a Doubt"],
+            ["DO_LOAD_CARDS_SCN", "Strange Happenings"],
+            ["DO_LOAD_CARDS_SCN", "Locked Doors"],
+            ["DO_LOAD_CARDS_SCN", "Nightgaunts"],
+            ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Avenida de Mayo", 5, 7, 3, 0],
+            ["VAR", "$LOCATIONS", ["SHUFFLE_LIST", ["LIST", "09550", "09551", "09552", "09553", "09554", "09555", "09556"]]], //Casa Rosada, Catedral Metropolitana, Cementario de la Recoleta, Palacio Errázuriz, The Cabildo, Banco de la Provincia, Teatro Colón
+            ["DO_SPAWN_LOCATIONS_SCN", null, "$LOCATIONS", ["LIST", 32, 58, 70, 58, 32, 20], ["LIST", 10, 10, 43, 76, 76, 43], 0, 6, 0],
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, 6, 1, [
+                ["DO_PLACE_RESOURCES_ON_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "$LOCATIONS.[$I]"], 1, true, null]
+            ]],
+            ["VAR", "$CHICA", ["GET_NAMED_CARD_ID", "09557"]], //La Chica Roja: The Girl in the Carmine Coat
+            ["SCARLET_KEYS_CONCEAL", "$GAME.firstPlayer", "$CHICA", true, null],
+            ["VAR", "$CONCEALED", ["CARDS_TO_CARD_IDS", ["FILTER_CARDS", "$CARD", ["AND",
+                ["EQUAL", "$CARD.groupId", "sharedLocations"],
+                ["EQUAL", "$CARD.sides.A.type", "MiniConcealed"]
+            ]]]],
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, 6, 1, [
+                ["DO_SPAWN_NAMED_AT_LOCATION_SCN", "$CONCEALED.[$I]", "$LOCATIONS.[$I]", 5, 7, 1]
+            ]],
+            ["VAR", "$FINAL_MESSAGE", "Off Map is “the shadows” (in play)."],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scarletKeysExtraExp", 1],
+                ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Each investigator earns 1 experience."]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;
