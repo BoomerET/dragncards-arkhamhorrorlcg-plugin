@@ -1,0 +1,190 @@
+{
+    "preBuiltDecks": {
+        "Dancing Mad Scenario": {
+            "label": "Dancing Mad Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Dancing Mad", "Dancing Mad Scenario Early Init", "Dancing Mad Scenario Init"]
+            ]
+        },
+        "Dancing Mad": {
+            "hideFromSearch": true,
+            "label": "Dancing Mad",
+            "cards": [
+                {"databaseId": "09591", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Dancing Mad
+                {"databaseId": "09592", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Silence Speaks
+                {"databaseId": "09593", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Easy Prey
+                {"databaseId": "09594", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //A Betrayal of Eyes
+                {"databaseId": "09595", "quantity": 1, "loadGroupId": "sharedActStory"},                                //False Step (v. I)
+                {"databaseId": "09596", "quantity": 1, "loadGroupId": "sharedActStory"},                                //False Colors (v. I)
+                {"databaseId": "09597", "quantity": 1, "loadGroupId": "sharedActStory"},                                //False Step (v. II)
+                {"databaseId": "09598", "quantity": 1, "loadGroupId": "sharedActStory"},                                //False Colors (v. II)
+                {"databaseId": "09599", "quantity": 1, "loadGroupId": "sharedActStory"},                                //False Light
+                {"databaseId": "09600a", "quantity": 1, "loadGroupId": "sharedLocations", "left": "15%", "top": "43%"}, //Café Luna: Coterie Haunt
+                {"databaseId": "09601", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //El Malecón
+                {"databaseId": "09602", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Jardines de la Tropical
+                {"databaseId": "09603", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Gran Teatro de La Habana
+                {"databaseId": "09604", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Miramar Yacht Club
+                {"databaseId": "09605", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Plaza Hotel
+                {"databaseId": "09606a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Desiderio Delgado Álvarez: The Man in the Blood-Soaked Suit
+                {"databaseId": "09607a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Desiderio Delgado Álvarez: The Man in the Blood-Soaked Suit
+                {"databaseId": "09608", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}                            //Body Snatched
+            ]
+        }
+    },
+    "actionLists": {
+        "Dancing Mad Scenario Early Init": [
+            ["CALCULATOR_PROMPT", "$GAME.firstPlayer", "Enter time passed", 1, 30, 0, "DANCING_MAD_TIME_CALLBACK", "$GAME.firstPlayer", "", ""]
+        ],
+        "Dancing Mad Scenario Early Init Continue 1": [
+            ["COND",
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDancingMadTimePassed", 20],
+                ["LOG", "└── Campaign Log: Record “the cell has been ambushed!”"],
+                ["TRUE"],
+                ["LOG", "└── Campaign Log: Record “the cell made a deal with Desi.”"]
+            ],
+            ["SCENARIO_INIT_RESUME", "Dancing Mad Scenario Init"]
+        ],
+        "Dancing Mad Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Dancing Mad"],
+            ["DO_SET_SPAWN_LOCATION", "09601", 35, 10], //El Malecón
+            ["DO_SET_SPAWN_LOCATION", "09602", 35, 76], //Jardines de la Tropical
+            ["DO_SET_SPAWN_LOCATION", "09603", 55, 76], //Gran Teatro de La Habana
+            ["DO_SET_SPAWN_LOCATION", "09604", 55, 10], //Miramar Yacht Club
+            ["DO_SET_SPAWN_LOCATION", "09605", 75, 43], //Plaza Hotel
+            ["DO_FLIP_FACEDOWN", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09607a"], false, null], //Desiderio Delgado Álvarez: The Man in the Blood-Soaked Suit
+            ["DO_LOAD_CARDS_SCN", "Agents of the Outside"],
+            ["VAR", "$FINAL_MESSAGE", "Off Map is “the shadows” (in play)."],
+            ["COND",
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDancingMadTimePassed", 20],
+                [
+                    ["DO_LOAD_CARDS_SCN", "Cleanup Crew"],
+                    ["DO_LOAD_CARDS_SCN", "Crimson Conspiracy"],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} In player order, each investigator must resolve the concealed keyword on the Coterie enemy in their Threat."]
+                ],
+                ["TRUE"],
+                [
+                    ["DO_LOAD_CARDS_INTO_SCN", "Cleanup Crew", "sharedDeckA"],
+                    ["DO_LOAD_CARDS_INTO_SCN", "Crimson Conspiracy", "sharedDeckB"],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "Cleanup Crew cards are in Deck A, Crimson Conspiracy cards are in Deck B. {{$FINAL_MESSAGE}}"]
+                ]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
+            ["DO_LOAD_CARDS_SCN", "Secret War"],
+            ["DO_LOAD_CARDS_SCN", "Shadow of a Doubt"],
+            ["COND",
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDancingMadTimePassed", 20],
+                [
+                    //v. II
+                    //Build the act deck using only (v. II) of acts 1 and 2, along with act 3. Remove (v. I) of acts 1 and 2 from the game.
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09595"], true, null], //False Step (v. I)
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09596"], true, null], //False Colors (v. I)
+                    //Put the Café Luna location into play, (Coterie Haunt) side faceup.
+                    //Each investigator begins play at Café Luna (Coterie Haunt).
+                    ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Café Luna", 5, 7, 3, 0],
+                    //Set each other location aside, out of play.
+                    //Find both copies of the Desiderio Delgado Álvarez enemy. One has a story asset version on its other side, and one has a standard encounter card back. Set both of them aside, out of play.
+                    //Set each of the four Outsider enemies aside, out of play (2x Otherworldly Mimic and 2x Paradigm Effacer).
+                    ["DO_MOVE_NAMED_DECK_CARDS_SCN", "09734", "sharedEncounterDeck", 2, "sharedNotInPlay"], //Otherworldly Mimic
+                    ["DO_MOVE_NAMED_DECK_CARDS_SCN", "09737", "sharedEncounterDeck", 2, "sharedNotInPlay"], //Paradigm Effacer
+                    //Spawn enemies in the shadows, as follows:
+                    // Find the set-aside Desiderio Delgado Álvarez enemy with the encounter card back. The lead investigator draws that enemy, resolving his concealed keyword.
+                    ["DO_PUT_INTO_PLAY_SCN", ["GET_NAMED_CARD_ID", "09606a"], ["GET_CONTROLLER_THREAT", "$GAME.firstPlayer"]], //Desiderio Delgado Álvarez: The Man in the Blood-Soaked Suit
+                    //One at a time, in player order, each other investigator discards cards from the top of the encounter deck until they discard a different Coterie enemy. Each investigator draws the enemy they discarded, resolving its concealed keyword. Shuffle each other discarded card back into the encounter deck.
+                    ["VAR", "$TITLES", ["SHUFFLE_LIST", ["LIST", "Coterie Agent (", "Coterie Enforcer (", "Coterie Assassin ("]]],
+                    ["VAR", "$I", 0],
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["COND",
+                            ["NOT_EQUAL", "$PLAYER_I", "$GAME.firstPlayer"],
+                            [
+                                ["DANCING_MAD_SPAWN_COTERIE_ENEMY", "$PLAYER_I", "$TITLES.[$I]"],
+                                ["INCREASE_VAR", "$I", 1]
+                            ]
+                        ]
+                    ]],
+                    ["SCENARIO_INIT_CONTINUE", null]
+                ],
+                ["TRUE"],
+                [
+                    //v. I
+                    //Build the act deck using only (v. I) of acts 1 and 2, along with act 3. Remove (v. II) of acts 1 and 2 from the game.
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09597"], true, null], //False Step (v. II)
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09598"], true, null], //False Colors (v. II)
+                    //Put the Café Luna location into play, (Bastion of Remembrance) side faceup.
+                    ["DO_FLIP_FACEDOWN", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09600a"], true, null], //Café Luna: Coterie Haunt
+                    //Each investigator begins play at Café Luna (Bastion of Remembrance).
+                    ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Café Luna", 5, 7, 3, 0],
+                    //Put all six remaining locations into play (see location placement on next page).
+                    ["DO_SPAWN_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09601"], false, null], //El Malecón
+                    ["DO_SPAWN_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09602"], false, null], //Jardines de la Tropical
+                    ["DO_SPAWN_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09603"], false, null], //Gran Teatro de La Habana
+                    ["DO_SPAWN_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09604"], false, null], //Miramar Yacht Club
+                    ["DO_SPAWN_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09605"], false, null], //Plaza Hotel
+                    //Find both copies of the Desiderio Delgado Álvarez enemy. One has a story asset version on its other side, and one has a standard encounter card back.
+                    //Set the version with the encounter card back aside, out of play.
+                    //Flip the other version to its story asset side.
+                    //Choose an investigator to take control of the Desiderio Delgado Álvarez story asset.
+                    ["PROMPT", "$GAME.firstPlayer", "dancingMadChooseDesiController"],
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["VAR", "$ALIAS_I", ["GET_ALIAS", "$PLAYER_I"]],
+                        ["VAR", "$LETTER", ["SUBSTRING", "$PLAYER_I", 6, 1]],
+                        ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "{{$ALIAS_I}}.", "{{$LETTER}}", ["LIST", "DANCING_MAD_DESI_CHOICE", "{{$GAME.firstPlayer}}", "{{$PLAYER_I}}", "1"]]
+                    ]]
+                    //Set the Cleanup Crew and Crimson Conspiracy encounter sets aside, out of play.
+                ]
+            ]
+        ]
+    },
+    "functions": {
+        "DANCING_MAD_TIME_CALLBACK": {
+            "args": ["$TARGET_PLAYER", "$TARGET_CARD_ID", "$ARGS", "$ACTOR_PLAYER", "$SELECTED_VALUE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DANCING_MAD_TIME_CALLBACK.TARGET_PLAYER"],
+                ["VALIDATE_NOT_NULL", "$ARGS", "DANCING_MAD_TIME_CALLBACK.ARGS"],
+                ["VALIDATE_NOT_EMPTY", "$SELECTED_VALUE", "DANCING_MAD_TIME_CALLBACK.SELECTED_VALUE"],
+                ["VAR", "$VALUE", ["CALC", "{{$SELECTED_VALUE}}"]],
+                ["VALIDATE_GT0", "$VALUE", "DANCING_MAD_TIME_CALLBACK.SELECTED_VALUE"],
+                ["SET", "/arkham/scenarioDancingMadTimePassed", "$VALUE"],
+                ["LOGF", "{0}{1} set time passed to {2}.", "$ARGS", "$TARGET_PLAYER", "$VALUE"],
+                ["ACTION_LIST", "Dancing Mad Scenario Early Init Continue 1"]
+            ]
+        },
+        "DANCING_MAD_SPAWN_COTERIE_ENEMY": {
+            "args": ["$TARGET_PLAYER", "$TITLE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DANCING_MAD_SPAWN_COTERIE_ENEMY.TARGET_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$TITLE", "DANCING_MAD_SPAWN_COTERIE_ENEMY.TITLE"],
+                ["VAR", "$ENEMIES", ["SHUFFLE_LIST", ["CARDS_TO_CARD_IDS", ["FILTER_CARDS", "$CARD", ["AND",
+                    ["EQUAL", "$CARD.groupId", "sharedEncounterDeck"],
+                    ["IN_STRING", "$CARD.sides.A.name", "$TITLE"]
+                ]]]]],
+                ["DO_PUT_INTO_PLAY_SCN", "$ENEMIES.[0]", ["GET_CONTROLLER_THREAT", "$TARGET_PLAYER"]]
+            ]
+        },
+        "DANCING_MAD_DESI_CHOICE": {
+            "args": ["$TARGET_PLAYER", "$CONTROLLER_PLAYER", "$LOG_MESSAGE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DANCING_MAD_DESI_CHOICE.TARGET_PLAYER"],
+                ["VALIDATE_PLAYER", "$CONTROLLER_PLAYER", "DANCING_MAD_DESI_CHOICE.CONTROLLER_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$LOG_MESSAGE", "DANCING_MAD_DESI_CHOICE.LOG_MESSAGE"],
+                ["COND",
+                    ["EQUAL", "$LOG_MESSAGE", "1"],
+                    ["LOGF", "{0} selected {1} to take control of Desiderio Delgado Álvarez.", "$TARGET_PLAYER", "$CONTROLLER_PLAYER"]
+                ],
+                ["DO_PUT_INTO_PLAY_SCN", ["GET_NAMED_CARD_ID", "09607a"], ["GET_CONTROLLER_PLAY", "$CONTROLLER_PLAYER"]], //Desiderio Delgado Álvarez: The Man in the Blood-Soaked Suit
+                ["SCENARIO_INIT_CONTINUE", null]
+            ]
+        }
+    },
+    "prompts": {
+        "dancingMadChooseDesiController": {
+            "args": [],
+            "message": "Select the investigator to take control of Desiderio Delgado Álvarez.",
+            "options": [
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;
