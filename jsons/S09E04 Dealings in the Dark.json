@@ -18,13 +18,13 @@
                 {"databaseId": "09568", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Search for the Manuscript
                 {"databaseId": "09569", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Search for the Talisman
                 {"databaseId": "09571", "quantity": 1, "loadGroupId": "sharedLocations", "left": "1%", "top": "4%"},    //The Unveiling
-                {"databaseId": "09577", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Darkened Alley
-                {"databaseId": "09578", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Public Baths
-                {"databaseId": "09579", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Marble Fountain
-                {"databaseId": "09580", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Crowded Shops
-                {"databaseId": "09581", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Busy Walkway
-                {"databaseId": "09582", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Rooftop Access
-                {"databaseId": "09583", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Grand Bazaar: Jewelers' Road
+                {"databaseId": "09577", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Darkened Alley
+                {"databaseId": "09578", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Public Baths
+                {"databaseId": "09579", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Marble Fountain
+                {"databaseId": "09580", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Crowded Shops
+                {"databaseId": "09581", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Busy Walkway
+                {"databaseId": "09582", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Rooftop Access
+                {"databaseId": "09583", "quantity": 1, "loadGroupId": "sharedPileA"},                                   //Grand Bazaar: Jewelers' Road
                 {"databaseId": "09585", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Umbral Harbinger
                 {"databaseId": "09584", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                           //Ece Şahin: The Vermillion-Veiled Lady
                 {"databaseId": "09586a", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                          //Sinister Aspirant (A)
@@ -39,10 +39,10 @@
             "hideFromSearch": true,
             "label": "Dealings in the Dark - Rest",
             "cards": [
-                {"databaseId": "09575", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "24%"},  //Istanbul University
-                {"databaseId": "09573", "quantity": 1, "loadGroupId": "sharedLocations", "left": "14%", "top": "43%"},  //Galata
-                {"databaseId": "09576", "quantity": 1, "loadGroupId": "sharedLocations", "left": "38%", "top": "43%"},  //Hagia Sophia
-                {"databaseId": "09574", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "62%"},  //Obelisk of Theodosius
+                {"databaseId": "09575", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "31%"},  //Istanbul University
+                {"databaseId": "09573", "quantity": 1, "loadGroupId": "sharedLocations", "left": "14%", "top": "55%"},  //Galata
+                {"databaseId": "09576", "quantity": 1, "loadGroupId": "sharedLocations", "left": "38%", "top": "55%"},  //Hagia Sophia
+                {"databaseId": "09574", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "79%"},  //Obelisk of Theodosius
                 {"databaseId": "09572", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Galata Docks
                 {"databaseId": "09590a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Twisted Antiprism: Talisman of Infinite Darkness
                 {"databaseId": "09570", "quantity": 1, "loadGroupId": "sharedNotInPlay"}                                //The Chase
@@ -97,7 +97,7 @@
             ],
             ["DO_MOVE_NAMED_DECK_CARDS_SCN", "Emissary from Yuggoth", "sharedEncounterDeck", 1, "sharedNotInPlay"],
             ["DO_LOAD_CARDS_SCN", "Dealings in the Dark - Rest"],
-            ["DO_SET_SPAWN_LOCATION", "09572", 2, 43], //Galata Docks
+            ["DO_SET_SPAWN_LOCATION", "09572", 2, 55], //Galata Docks
             ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Hagia Sophia", 5, 7, 3, 0],
             ["COND",
                 ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
@@ -138,7 +138,8 @@
                 ["DO_PUT_INTO_PLAY_SCN", "$CULTISTS.[$I]", ["GET_CONTROLLER_THREAT", "$PLAYER_I"]],
                 ["INCREASE_VAR", "$I", 1]
             ]],
-            ["SET", "/arkham/finalScenarioMessage", "Grand Bazaar locations are in Deck A. Off Map is “the shadows” (in play). See “Location Adjacency in the Grand Bazaar” and “Acolyte Concealed Mini-cards. In player order, each investigator must resolve the concealed keyword (as granted by agenda 1a) on the Cultist enemy in their Threat.”"],
+            ["SET", "/arkham/scenarioDealingsInTheDarkAct2Setup", false],
+            ["SET", "/arkham/finalScenarioMessage", "Grand Bazaar locations are in Pile A. Off Map is “the shadows” (in play). See “Location Adjacency in the Grand Bazaar” and “Acolyte Concealed Mini-cards.” In player order, each investigator must resolve the concealed keyword (as granted by agenda 1a) on the Cultist enemy in their Threat."],
             ["SCENARIO_INIT_CONTINUE", null]
         ]
     },
@@ -169,6 +170,167 @@
                 ["DO_PUT_INTO_PLAY_SCN", ["GET_NAMED_CARD_ID", "09584"], ["GET_CONTROLLER_PLAY", "$CONTROLLER_PLAYER"]], //Ece Şahin: The Vermillion-Veiled Lady
                 ["ACTION_LIST", "Dealings in the Dark Scenario Init Continue 2"]
             ]
+        },
+        "DEALINGS_IN_THE_DARK_SETUP_ACT_2": {
+            "args": ["$TARGET_PLAYER"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DEALINGS_IN_THE_DARK_SETUP_ACT_2.TARGET_PLAYER"],
+                ["VAR", "$BAZAAR", ["CARDS_TO_CARD_IDS", ["FILTER_CARDS", "$CARD", ["AND",
+                    ["EQUAL", "$CARD.groupId", "sharedPileA"],
+                    ["IN_STRING", "$CARD.sides.A.traits", "Bazaar."]
+                ]]]],
+                ["COND",
+                    ["AND",
+                        ["EQUAL", ["LENGTH", "$BAZAAR"], 7],
+                        ["EQUAL", ["GET_ALL_CARDS_IN_GROUP_COUNT", "sharedPileA"], 7],
+                        ["EQUAL", ["CAN_REVEAL_CHAOS_TOKEN", "$TARGET_PLAYER", null], true]
+                    ],
+                    [
+                        ["LOGF", "{0} sets up Act 2.", "$TARGET_PLAYER"],
+                        //Shuffle the seven Grand Bazaar locations and remove one of them from the game at random, without looking at it.
+                        ["DO_SHUFFLE_GROUP", "$TARGET_PLAYER", "sharedPileA", true, null],
+                        ["VAR", "$TOP_CARD_ID", ["GET_TOP_CARD_ID", "sharedPileA"]],
+                        ["LOGF", "└── {0} removes scenario's {1} from the game.", "$TARGET_PLAYER", "$TOP_CARD_ID"],
+                        ["MOVE_CARD", "$TOP_CARD_ID", "sharedRemoved", -1],
+                        //Reveal a random token from the chaos bag, and find the diagram below that matches the revealed chaos token (if none match, retry).
+                        ["DO_REVEAL_CHAOS_TOKEN", "$TARGET_PLAYER", true, null],
+                        ["VAR", "$REVEALED_CHAOS_TOKEN_ID", "$DO_REVEAL_CHAOS_TOKEN_RESULT"],
+                        ["VAR", "$REVEALED_CHAOS_TOKEN_IDS", ["LIST", "$REVEALED_CHAOS_TOKEN_ID"]],
+                        ["WHILE",
+                            ["AND",
+                                ["NOT_EQUAL", "$REVEALED_CHAOS_TOKEN_ID", null],
+                                ["EQUAL", ["IS_BASIC_CHAOS_TOKEN", "$CARD_BY_ID.$REVEALED_CHAOS_TOKEN_ID.sides.A.databaseId"], false],
+                                ["EQUAL", ["CAN_REVEAL_CHAOS_TOKEN", "$TARGET_PLAYER", null], true]
+                            ],
+                            [
+                                ["DO_REVEAL_CHAOS_TOKEN", "$TARGET_PLAYER", true, null],
+                                ["UPDATE_VAR", "$REVEALED_CHAOS_TOKEN_ID", "$DO_REVEAL_CHAOS_TOKEN_RESULT"],
+                                ["UPDATE_VAR", "$REVEALED_CHAOS_TOKEN_IDS", ["APPEND", "$REVEALED_CHAOS_TOKEN_IDS", "$REVEALED_CHAOS_TOKEN_ID"]]
+                            ]
+                        ],
+                        ["FOR_EACH_VAL", "$CARD_ID", "$REVEALED_CHAOS_TOKEN_IDS", [
+                            ["COND",
+                                ["NOT_EQUAL", "$CARD_ID", null],
+                                ["DO_DISCARD_CARD", "$TARGET_PLAYER", "$CARD_ID", true, null]
+                            ]
+                        ]],
+                        ["VAR", "$REVEALED_CHAOS_TOKEN", null],
+                        ["COND",
+                            ["NOT_EQUAL", "$REVEALED_CHAOS_TOKEN_ID", null],
+                            ["UPDATE_VAR", "$REVEALED_CHAOS_TOKEN", "$CARD_BY_ID.$REVEALED_CHAOS_TOKEN_ID.sides.A.databaseId"]
+                        ],
+                        //Put the remaining six Grand Bazaar locations into play, arranged in a pattern of rows and columns according to the randomly chosen diagram. Note that one of these locations is designated as the “entrance” and one is designated as the “east gate.”
+                        ["VAR", "$LEFTS", null],
+                        ["VAR", "$TOPS", null],
+                        ["COND",
+                            ["OR",
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m1"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m3"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m5"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m7"]
+                            ],
+                            [
+                                ["UPDATE_VAR", "$LEFTS", ["LIST", 50, 62, 74, 86, 62, 74]],
+                                ["UPDATE_VAR", "$TOPS", ["LIST", 55, 55, 55, 55, 79, 31]]
+                            ],
+                            ["OR",
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_skull"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_p1"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_p0"]
+                            ],
+                            [
+                                ["UPDATE_VAR", "$LEFTS", ["LIST", 50, 62, 74, 86, 74, 86]],
+                                ["UPDATE_VAR", "$TOPS", ["LIST", 55, 55, 55, 55, 31, 31]]
+                            ],
+                            ["OR",
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m2"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m4"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m6"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_m8"]
+                            ],
+                            [
+                                ["UPDATE_VAR", "$LEFTS", ["LIST", 50, 62, 74, 86, 62, 86]],
+                                ["UPDATE_VAR", "$TOPS", ["LIST", 55, 55, 55, 55, 31, 79]]
+                            ],
+                            ["OR",
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_cultist"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_tablet"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_elder_thing"]
+                            ],
+                            [
+                                ["UPDATE_VAR", "$LEFTS", ["LIST", 50, 62, 74, 62, 74, 74]],
+                                ["UPDATE_VAR", "$TOPS", ["LIST", 55, 55, 55, 79, 79, 31]]
+                            ],
+                            ["OR",
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_elder_sign"],
+                                ["EQUAL", "$REVEALED_CHAOS_TOKEN", "chaos_auto_fail"]
+                            ],
+                            [
+                                ["UPDATE_VAR", "$LEFTS", ["LIST", 50, 62, 74, 86, 86, 86]],
+                                ["UPDATE_VAR", "$TOPS", ["LIST", 55, 55, 55, 55, 31, 7]]
+                            ]
+                        ],
+                        ["COND",
+                            ["NOT_EQUAL", "$LEFTS", null],
+                            [
+                                ["VAR", "$ENTRANCE", null],
+                                ["VAR", "$EAST_GATE", null],
+                                ["FOR_EACH_START_STOP_STEP", "$I", 0, 6, 1, [
+                                    ["VAR", "$TOP_CARD_ID", ["GET_TOP_CARD_ID", "sharedPileA"]],
+                                    ["COND",
+                                        ["EQUAL", "$ENTRANCE", null],
+                                        ["UPDATE_VAR", "$ENTRANCE", "$TOP_CARD_ID"]
+                                    ],
+                                    ["UPDATE_VAR", "$EAST_GATE", "$TOP_CARD_ID"],
+                                    ["DO_SET_SPAWN_LOCATION", "$TOP_CARD_ID", "$LEFTS.[$I]", "$TOPS.[$I]"],
+                                    ["DO_SPAWN_CARD", "$TARGET_PLAYER", "$TOP_CARD_ID", true, null]
+                                ]],
+                                ["SET", "/cardById/$EAST_GATE/targeting/$TARGET_PLAYER", true],
+                                //Move each investigator to the Grand Bazaar location marked in the randomly chosen diagram as the “entrance.”
+                                ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                                    ["DO_MOVE_MINI_INVESTIGATOR_TO", "$PLAYER_I", "$ENTRANCE", true, null]
+                                ]],
+                                //Shuffle together each of the concealed mini-cards on the four locations from act 1, and divide them as evenly as possible among the Grand Bazaar locations in play.
+                                ["VAR", "$CONCEALED", ["SHUFFLE_LIST", ["CARDS_TO_CARD_IDS", ["FILTER_CARDS", "$CARD", ["AND",
+                                    ["EQUAL", "$CARD.groupId", "sharedLocations"],
+                                    ["EQUAL", "$CARD.sides.A.type", "MiniConcealed"],
+                                    ["EQUAL", "$CARD.currentSide", "B"]
+                                ]]]]],
+                                ["VAR", "$LEFT", 1],
+                                ["FOR_EACH_VAL", "$CONCEALED_ID", "$CONCEALED", [
+                                    ["WHILE",
+                                        ["NOT_EQUAL", ["GET_CARD_AT_LOCATION_EXCEPT", "$LEFT", 1, "$CONCEALED_ID"], null],
+                                        ["INCREASE_VAR", "$LEFT", 3]
+                                    ],
+                                    ["DO_SET_CARD_LOCATION", "$CONCEALED_ID", "$LEFT", 1]
+                                ]],
+                                //You are now ready to proceed to act 2.
+                                ["DO_ADVANCE_STORY", "$TARGET_PLAYER", "sharedActStory", true, null],
+                                ["LOGF", "└── Treat Act 1 locations, as well as cards and tokens on them, as not in play until instructed otherwise. “East Gate” is the targeted card. Divide each of the concealed mini-cards as evenly as possible among the Grand Bazaar locations in play."],
+                                ["SET", "/arkham/scenarioDealingsInTheDarkAct2Setup", true]
+                            ],
+                            ["TRUE"],
+                            ["LOGF", "└── You cannot setup Act 2, {0}.", "$TARGET_PLAYER"]
+                        ]
+                    ],
+                    ["TRUE"],
+                    ["LOGF", "└── You cannot setup Act 2, {0}.", "$TARGET_PLAYER"]
+                ]
+            ]
+        }
+    },
+    "automation": {
+        "cards": {
+            "09568": { //Search for the Manuscript (Manuscript Discovered)
+                "ability" : {
+                    "B": [
+                        ["COND",
+                            ["EQUAL", "$GAME.arkham.scenarioDealingsInTheDarkAct2Setup", false],
+                            ["PROMPT", "$PLAYER_N", "dealingsInTheDarkSearchForTheManuscriptAbilityB"]
+                        ]
+                    ]
+                }
+            }
         }
     },
     "prompts": {
@@ -176,6 +338,23 @@
             "args": [],
             "message": "Select the investigator to take control of Ece Şahin.",
             "options": [
+            ]
+        },
+        "dealingsInTheDarkSearchForTheManuscriptAbilityB": {
+            "args": [],
+            "message": "Do you want to setup Act 2?",
+            "options": [
+                {
+                    "label": "Yes.",
+                    "hotkey": "Y",
+                    "code": [
+                        ["DEALINGS_IN_THE_DARK_SETUP_ACT_2", "$PLAYER_N"]
+                    ]
+                },
+                {
+                    "label": "No.",
+                    "hotkey": "N"
+                }
             ]
         }
     }

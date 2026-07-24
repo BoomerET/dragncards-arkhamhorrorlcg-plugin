@@ -139,6 +139,35 @@
                 ]
             ]
         },
+        "IS_BASIC_CHAOS_TOKEN": {
+            "args": ["$CHAOS_TOKEN_DATABASE_ID"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$CHAOS_TOKEN_DATABASE_ID", "IS_BASIC_CHAOS_TOKEN.CHAOS_TOKEN_DATABASE_ID"],
+                ["COND",
+                    ["OR",
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_p1"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_p0"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m1"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m2"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m3"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m4"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m5"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m6"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m7"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_m8"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_elder_sign"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_auto_fail"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_cultist"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_elder_thing"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_skull"],
+                        ["EQUAL", "$CHAOS_TOKEN_DATABASE_ID", "chaos_tablet"]
+                    ],
+                    true,
+                    ["TRUE"],
+                    false
+                ]
+            ]
+        },
         "GET_CHAOS_TOKEN_BAG_CARD_ID": {
             "args": ["$CHAOS_TOKEN_NAME"],
             "code": [
@@ -179,6 +208,7 @@
             "code": [
                 ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DO_REVEAL_CHAOS_TOKEN.TARGET_PLAYER"],
                 ["VALIDATE_BOOLEAN", "$LOG_EVENT", "DO_REVEAL_CHAOS_TOKEN.LOG_EVENT"],
+                ["DEFINE", "$DO_REVEAL_CHAOS_TOKEN_RESULT", null],
                 ["COND",
                     ["CAN_REVEAL_CHAOS_TOKEN", "$TARGET_PLAYER", "$ACTOR_PLAYER"],
                     [
@@ -188,7 +218,8 @@
                         ],
                         ["VAR", "$CHAOS_TOKEN", ["GET_TOP_CARD", "sharedChaosBag"]],
                         ["DO_LOG", "$LOG_EVENT", "$ACTOR_PLAYER", "$TARGET_PLAYER", "reveal {{$CHAOS_TOKEN.sides.A.name}} Chaos Token from the Chaos Bag.", "reveals {{$CHAOS_TOKEN.sides.A.name}} Chaos Token from the Chaos Bag."],
-                        ["MOVE_CARD", "$CHAOS_TOKEN.id", "sharedVoid", 0, 0, {"allowFlip": false}]
+                        ["MOVE_CARD", "$CHAOS_TOKEN.id", "sharedVoid", 0, 0, {"allowFlip": false}],
+                        ["DEFINE", "$DO_REVEAL_CHAOS_TOKEN_RESULT", "$CHAOS_TOKEN.id"]
                     ]
                 ]
             ]
