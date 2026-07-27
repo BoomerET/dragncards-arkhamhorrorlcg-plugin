@@ -33,9 +33,9 @@
                 {"databaseId": "09628", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Earsplitter
                 {"databaseId": "09629", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Gorefeaster
                 {"databaseId": "09630", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Fellhound
-                {"databaseId": "09631", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                           //Ravenous Grizzly
-                {"databaseId": "09632", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                           //Cracking Ice
-                {"databaseId": "09633", "quantity": 1, "loadGroupId": "sharedEncounterDeck"}                            //Snowslide
+                {"databaseId": "09631", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Ravenous Grizzly
+                {"databaseId": "09632", "quantity": 4, "loadGroupId": "sharedEncounterDeck"},                           //Cracking Ice
+                {"databaseId": "09633", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}                            //Snowslide
             ]
         }
     },

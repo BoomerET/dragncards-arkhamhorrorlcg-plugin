@@ -139,7 +139,12 @@
                 ["INCREASE_VAR", "$I", 1]
             ]],
             ["SET", "/arkham/scenarioDealingsInTheDarkAct2Setup", false],
-            ["SET", "/arkham/finalScenarioMessage", "Grand Bazaar locations are in Pile A. Off Map is “the shadows” (in play). See “Location Adjacency in the Grand Bazaar” and “Acolyte Concealed Mini-cards.” In player order, each investigator must resolve the concealed keyword (as granted by agenda 1a) on the Cultist enemy in their Threat."],
+            ["VAR", "$FINAL_MESSAGE", "Grand Bazaar locations are in Pile A. Off Map is “the shadows” (in play). See “Location Adjacency in the Grand Bazaar” and “Acolyte Concealed Mini-cards.” In player order, each investigator must resolve the concealed keyword (as granted by agenda 1a) on the Cultist enemy in their Threat."],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scarletKeysExtraExp", 1],
+                ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Each investigator earns 1 experience."]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
             ["SCENARIO_INIT_CONTINUE", null]
         ]
     },
