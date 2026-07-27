@@ -1,0 +1,83 @@
+{
+    "preBuiltDecks": {
+        "On Thin Ice Scenario": {
+            "label": "On Thin Ice Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "On Thin Ice", null, "On Thin Ice Scenario Init"]
+            ]
+        },
+        "On Thin Ice": {
+            "hideFromSearch": true,
+            "label": "On Thin Ice",
+            "cards": [
+                {"databaseId": "09609", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //On Thin Ice
+                {"databaseId": "09610", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Lost and Forgotten
+                {"databaseId": "09611", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Eyes of the Void
+                {"databaseId": "09612", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Annihilation
+                {"databaseId": "09613", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Quest for the Sable Glass
+                {"databaseId": "09614", "quantity": 1, "loadGroupId": "sharedActStory"},                                //If It Bleeds...
+                {"databaseId": "09615a", "quantity": 1, "loadGroupId": "sharedActStory"},                               //Prowling Nightmare
+                {"databaseId": "09616", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Last Stand
+                {"databaseId": "09617", "quantity": 1, "loadGroupId": "sharedLocations", "left": "15%", "top": "43%"},  //Anchorage
+                {"databaseId": "09618", "quantity": 1, "loadGroupId": "sharedLocations", "left": "35%", "top": "43%"},  //Fairbanks
+                {"databaseId": "09622", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Forgotten Outpost
+                {"databaseId": "09623", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Hunter's Lodge
+                {"databaseId": "09624", "quantity": 1, "loadGroupId": "sharedDeckA"},                                   //Condemned Gold Mine
+                {"databaseId": "09634a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Sable Glass: Translocated Lens
+                {"databaseId": "09625a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Thorne: The One with the Red Cravat
+                {"databaseId": "09626", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: True Form
+                {"databaseId": "09627", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Fellbeak
+                {"databaseId": "09628", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Earsplitter
+                {"databaseId": "09629", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Gorefeaster
+                {"databaseId": "09630", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Void Chimera: Fellhound
+                {"databaseId": "09631", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                           //Ravenous Grizzly
+                {"databaseId": "09632", "quantity": 1, "loadGroupId": "sharedEncounterDeck"},                           //Cracking Ice
+                {"databaseId": "09633", "quantity": 1, "loadGroupId": "sharedEncounterDeck"}                            //Snowslide
+            ]
+        }
+    },
+    "actionLists": {
+        "On Thin Ice Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "On Thin Ice"],
+            ["DO_LOAD_CARDS_SCN", "Agents of the Outside"],
+            ["DO_LOAD_CARDS_SCN", "Agents of Yuggoth"],
+            ["DO_LOAD_CARDS_SCN", "Crimson Conspiracy"],
+            ["DO_LOAD_CARDS_SCN", "Dark Veiling"],
+            ["DO_LOAD_CARDS_SCN", "Outsiders"],
+            ["DO_LOAD_CARDS_SCN", "Spatial Anomaly"],
+            ["DO_LOAD_CARDS_SCN", "Chilling Cold"],
+            ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Anchorage", 5, 7, 3, 0],
+            ["VAR", "$LOCATIONS", ["SHUFFLE_LIST", ["LIST", "09619", "09620", "09621"]]], //Mountain Stream, Frozen Lake, Isolated Road
+            ["DO_SPAWN_LOCATIONS_SCN", "Alaskan Wilderness", "$LOCATIONS", ["LIST", 55, 55, 55], ["LIST", 10, 43, 76], 0, 3, 0],
+            ["CALCULATOR_PROMPT", "$GAME.firstPlayer", "Enter time passed", 1, 30, 0, "ON_THIN_ICE_TIME_CALLBACK", "$GAME.firstPlayer", "", ""]
+        ],
+        "On Thin Ice Scenario Init Continue 1": [
+            ["VAR", "$DOOM", ["TO_INT", ["DIVIDE", "$GAME.arkham.scenarioOnThinIceTimePassed", 5]]],
+            ["COND",
+                ["GREATER_THAN", "$DOOM", 0],
+                ["DO_PLACE_DOOM_ON_CURRENT_AGENDA_SCN", "$DOOM"]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "Outer Wilderness cards are in Deck A. Off Map is “the shadows” (in play)."],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    },
+    "functions": {
+        "ON_THIN_ICE_TIME_CALLBACK": {
+            "args": ["$TARGET_PLAYER", "$TARGET_CARD_ID", "$ARGS", "$ACTOR_PLAYER", "$SELECTED_VALUE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "ON_THIN_ICE_TIME_CALLBACK.TARGET_PLAYER"],
+                ["VALIDATE_NOT_NULL", "$ARGS", "ON_THIN_ICE_TIME_CALLBACK.ARGS"],
+                ["VALIDATE_NOT_EMPTY", "$SELECTED_VALUE", "ON_THIN_ICE_TIME_CALLBACK.SELECTED_VALUE"],
+                ["VAR", "$VALUE", ["CALC", "{{$SELECTED_VALUE}}"]],
+                ["VALIDATE_GT0", "$VALUE", "ON_THIN_ICE_TIME_CALLBACK.SELECTED_VALUE"],
+                ["SET", "/arkham/scenarioOnThinIceTimePassed", "$VALUE"],
+                ["LOGF", "{0}{1} set time passed to {2}.", "$ARGS", "$TARGET_PLAYER", "$VALUE"],
+                ["ACTION_LIST", "On Thin Ice Scenario Init Continue 1"]
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;
