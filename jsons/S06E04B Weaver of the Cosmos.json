@@ -71,7 +71,7 @@
                 ["DO_CREATE_CARDS_SCN", "The Great Web", "$GREAT_WEBS.[$I]", 1, "sharedDeckA"]
             ]],
             ["SET", "/arkham/scenarioWeaverOfTheCosmosAct2Setup", false],
-            ["SET", "/arkham/finalScenarioMessage", "The Great Web locations are in Deck A. Use Act 1b's card ability to setup Act 2."],
+            ["SET", "/arkham/finalScenarioMessage", "The Great Web cards are in Deck A. Use Act 1b's card ability to setup Act 2."],
             ["SCENARIO_INIT_CONTINUE", null]
         ]
     },

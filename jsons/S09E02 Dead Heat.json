@@ -109,7 +109,7 @@
                 ]
             ],
             ["SET", "/arkham/replacedLocationsGoTo", "sharedDeckA"],
-            ["SET", "/arkham/finalScenarioMessage", "Abandoned locations are in Deck A. Off Map is “the shadows” (in play). See “Civilians”, “Choosing a Random Location”, and “Replacing Locations.”"],
+            ["SET", "/arkham/finalScenarioMessage", "Abandoned cards are in Deck A. Off Map is “the shadows” (in play). See “Civilians”, “Choosing a Random Location”, and “Replacing Locations.”"],
             ["SCENARIO_INIT_CONTINUE", null]
         ]
     },
