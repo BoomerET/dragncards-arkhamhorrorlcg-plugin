@@ -1,0 +1,202 @@
+{
+    "preBuiltDecks": {
+        "Dogs of War Scenario": {
+            "label": "Dogs of War Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Dogs of War", "Dogs of War Scenario Early Init", "Dogs of War Scenario Init"]
+            ]
+        },
+        "Dogs of War": {
+            "hideFromSearch": true,
+            "label": "Dogs of War",
+            "cards": [
+                {"databaseId": "09635", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Dogs of War
+                {"databaseId": "09636", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Brewing Catastrophe (v. I)
+                {"databaseId": "09637", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Brewing Catastrophe (v. II)
+                {"databaseId": "09638", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Brewing Catastrophe (v. III)
+                {"databaseId": "09639", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Rabbits Who Run (v. I)
+                {"databaseId": "09640", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Rabbits Who Run (v. II)
+                {"databaseId": "09641", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Rabbits Who Run (v. III)
+                {"databaseId": "09645", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "73%"},  //Windsor Palace Hotel
+                {"databaseId": "09653a", "quantity": 1, "loadGroupId": "sharedLocations", "left": "31%", "top": "80%"}, //Key Locus: Defensive Barrier
+                {"databaseId": "09646", "quantity": 1, "loadGroupId": "sharedLocations", "left": "26%", "top": "13%"},  //Victoria College
+                {"databaseId": "09653a", "quantity": 1, "loadGroupId": "sharedLocations", "left": "31%", "top": "20%"}, //Key Locus: Defensive Barrier
+                {"databaseId": "09647", "quantity": 1, "loadGroupId": "sharedLocations", "left": "45%", "top": "43%"},  //Qaitbay Citadel
+                {"databaseId": "09648", "quantity": 1, "loadGroupId": "sharedLocations", "left": "64%", "top": "13%"},  //The Corniche
+                {"databaseId": "09653a", "quantity": 1, "loadGroupId": "sharedLocations", "left": "69%", "top": "20%"}, //Key Locus: Defensive Barrier
+                {"databaseId": "09649", "quantity": 1, "loadGroupId": "sharedLocations", "left": "64%", "top": "73%"},  //Zan'et el Settat
+                {"databaseId": "09653a", "quantity": 1, "loadGroupId": "sharedLocations", "left": "69%", "top": "80%"}, //Key Locus: Defensive Barrier
+                {"databaseId": "09642", "quantity": 1, "loadGroupId": "sharedLocations", "left": "7%", "top": "43%"},   //The Bourse: Locus Safeguard
+                {"databaseId": "09643", "quantity": 1, "loadGroupId": "sharedLocations", "left": "7%", "top": "43%"},   //The Bourse: Coterie Post
+                {"databaseId": "09644", "quantity": 1, "loadGroupId": "sharedLocations", "left": "7%", "top": "43%"},   //The Bourse: Commercial Center
+                {"databaseId": "09651", "quantity": 1, "loadGroupId": "sharedLocations", "left": "83%", "top": "43%"},  //Catacombs of Kom el Shoqafa: Bloody Nexus
+                {"databaseId": "09652", "quantity": 1, "loadGroupId": "sharedLocations", "left": "83%", "top": "43%"},  //Catacombs of Kom el Shoqafa: Ancient Tomb
+                {"databaseId": "09650", "quantity": 1, "loadGroupId": "sharedLocations", "left": "83%", "top": "43%"},  //Catacombs of Kom el Shoqafa: Den of the Beast
+                {"databaseId": "09654a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Claret Knight: Coterie Kingpin
+                {"databaseId": "09655a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Beast in a Cowl of Crimson: Ravager in Red
+                {"databaseId": "09659a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Light of Pharos: Coral Prism
+                {"databaseId": "09656", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Scarlet Beast
+                {"databaseId": "09657", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Coterie Provocateur
+                {"databaseId": "09658", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}                            //Locus Pulse
+            ]
+        }
+    },
+    "actionLists": {
+        "Dogs of War Scenario Early Init": [
+            ["CALCULATOR_PROMPT", "$GAME.firstPlayer", "Enter time passed", 1, 30, 0, "DOGS_OF_WAR_TIME_CALLBACK", "$GAME.firstPlayer", "", ""]
+        ],
+        "Dogs of War Scenario Early Init Continue 1": [
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Decide.", ["LIST", "“Very well, we accept.”", "Refuse."], "Dogs of War Scenario Early Init Continue 2"]
+        ],
+        "Dogs of War Scenario Early Init Continue 2": [
+            ["LOG", "└── Decision: {{$GAME.arkham.scenarioAnswer1Text}}"],
+            ["COND",
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioDogsOfWarTimePassed", 20],
+                ["SET", "/arkham/scenarioDogsOfWarVariant", 3], //Intro 6 and 7
+                ["TRUE"],
+                ["COND",
+                    ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                    ["SET", "/arkham/scenarioDogsOfWarVariant", 1], //Intro 4
+                    ["TRUE"],
+                    ["SET", "/arkham/scenarioDogsOfWarVariant", 2] //Intro 5
+                ]
+            ],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["LOG", "└── Campaign Log: Record “the cell made a deal with the Claret Knight.”"],
+                    ["SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS", "chaos_elder_thing", "chaos_tablet"] //Intro 4 and 6
+                ],
+                ["TRUE"],
+                [
+                    ["LOG", "└── Campaign Log: Record “the cell is assisting Agent Sirry.”"],
+                    ["SCARLET_KEYS_REMOVE_ADD_CHAOS_TOKENS", "chaos_tablet", "chaos_elder_thing"] //Intro 5 and 7
+                ]
+            ],
+            ["SCENARIO_INIT_RESUME", "Dogs of War Scenario Init"]
+        ],
+        "Dogs of War Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Dogs of War"],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 1],
+                ["DO_LOAD_CARDS_SCN", "Cleanup Crew"]
+            ],
+            ["DO_LOAD_CARDS_SCN", "Scarlet Sorcery"],
+            ["DO_LOAD_CARDS_SCN", "Spatial Anomaly"],
+            ["DO_LOAD_CARDS_SCN", "Spreading Corruption"],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 2],
+                ["DO_LOAD_CARDS_SCN", "Dark Cult"]
+            ],
+            ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Qaitbay Citadel", 5, 7, 3, 0],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 1],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09636"], true, null], //Brewing Catastrophe (v. I)
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09639"], true, null]  //Rabbits Who Run (v. I)
+                ]
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 2],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09637"], true, null], //Brewing Catastrophe (v. II)
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09640"], true, null]  //Rabbits Who Run (v. II)
+                ]
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 3],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09638"], true, null], //Brewing Catastrophe (v. III)
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09641"], true, null]  //Rabbits Who Run (v. III)
+                ]
+            ],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 1],
+                [
+                    ["VAR", "$KEY_LOCI", ["FILTER_CARDS", "$CARD", ["EQUAL", "$CARD.currentFace.databaseId", "09653a"]]], //Key Locus: Defensive Barrier
+                    ["FOR_EACH_VAL", "$CARD", "$KEY_LOCI", ["DO_FLIP_FACEDOWN", "$GAME.firstPlayer", "$CARD.id", false, null]],
+                    ["VAR", "$LOCUS_SITES", ["LIST", "09645", "09646", "09648", "09649"]], //Windsor Palace Hotel, Victoria College, The Corniche, Zan'et el Settat
+                    ["FOR_EACH_VAL", "$LOCUS_SITE", "$LOCUS_SITES", ["DO_PLACE_DOOM_ON_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "$LOCUS_SITE"], 1, true, null]]
+                ]
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 1],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09642"], true, null], //The Bourse: Locus Safeguard
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09651"], true, null]  //Catacombs of Kom el Shoqafa: Bloody Nexus
+                ]
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 2],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09643"], true, null], //The Bourse: Coterie Post
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09652"], true, null]  //Catacombs of Kom el Shoqafa: Ancient Tomb
+                ]
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 3],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09644"], true, null], //The Bourse: Commercial Center
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09650"], true, null]  //Catacombs of Kom el Shoqafa: Den of the Beast
+                ]
+            ],
+            ["VAR", "$FINAL_MESSAGE", "Off Map is “the shadows” (in play)."],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 1],
+                [
+                    ["DO_FLIP_FACEDOWN", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09654a"], false, null], //The Claret Knight: Coterie Kingpin
+                    ["DO_SPAWN_NAMED_AT_LOCATION_SCN", "09654a", "The Bourse", 3, 3, 1], //The Claret Knight: Coterie Kingpin
+                    ["DO_ATTACH_ID_TO_ID", "09659a", "09654a", false], //The Light of Pharos: Coral Prism, The Claret Knight: Coterie Kingpin
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Both The Claret Knight and The Light of Pharos are controlled by all of the investigators."],
+                    ["DO_SPAWN_NAMED_AT_LOCATION_SCN", "09655a", "Catacombs of Kom el Shoqafa", 3, 3, 1] //The Beast in a Cowl of Crimson: Ravager in Red
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 2],
+                [
+                    ["DO_SPAWN_NAMED_AT_LOCATION_SCN", "09654a", "The Bourse", 3, 3, 1], //The Claret Knight: Coterie Kingpin
+                    ["DO_ATTACH_ID_TO_ID", "09659a", "09654a", true], //The Light of Pharos: Coral Prism, The Claret Knight: Coterie Kingpin
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09655a"], true, null], //The Beast in a Cowl of Crimson: Ravager in Red
+                    ["VAR", "$ASSASSIN_ID", ["GET_NAMED_CARD_ID", "09727a"]], //Coterie Assassin (A)
+                    ["DO_MOVE_NAMED_DECK_CARDS", "$GAME.firstPlayer", "$ASSASSIN_ID", "sharedEncounterDeck", 1, ["GET_CONTROLLER_THREAT", "$GAME.firstPlayer"], true, null],
+                    ["VAR", "$ORIGINAL_CONCEALED", "$CARD_BY_ID.$ASSASSIN_ID.sides.A.concealed"],
+                    ["VAR", "$MODIFIED_CONCEALED", ["ADD", "$ORIGINAL_CONCEALED", ["SUBTRACT", "$GAME.arkham.numPlayers", 1]]],
+                    ["SET", "/cardById/$ASSASSIN_ID/sides/A/concealed", "$MODIFIED_CONCEALED"],
+                    ["SCARLET_KEYS_CONCEAL", "$GAME.firstPlayer", "$ASSASSIN_ID", true, null],
+                    ["SET", "/cardById/$ASSASSIN_ID/sides/A/concealed", "$ORIGINAL_CONCEALED"],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing Coterie Assassin (A)’s concealed mini-cards."]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioDogsOfWarVariant", 3],
+                [
+                    ["DO_FLIP_FACEDOWN", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09655a"], false, null], //The Beast in a Cowl of Crimson: Ravager in Red
+                    ["DO_SPAWN_NAMED_AT_LOCATION_SCN", "09655a", "Catacombs of Kom el Shoqafa", 3, 3, 1], //The Beast in a Cowl of Crimson: Ravager in Red
+                    ["DO_ATTACH_ID_TO_ID", "09659a", "09655a", true], //The Light of Pharos: Coral Prism, The Beast in a Cowl of Crimson: Ravager in Red
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09654a"], true, null] //The Claret Knight: Coterie Kingpin
+                ]
+            ],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scarletKeysExtraExp", 1],
+                ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Each investigator earns 1 experience."]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    },
+    "functions": {
+        "DOGS_OF_WAR_TIME_CALLBACK": {
+            "args": ["$TARGET_PLAYER", "$TARGET_CARD_ID", "$ARGS", "$ACTOR_PLAYER", "$SELECTED_VALUE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DOGS_OF_WAR_TIME_CALLBACK.TARGET_PLAYER"],
+                ["VALIDATE_NOT_NULL", "$ARGS", "DOGS_OF_WAR_TIME_CALLBACK.ARGS"],
+                ["VALIDATE_NOT_EMPTY", "$SELECTED_VALUE", "DOGS_OF_WAR_TIME_CALLBACK.SELECTED_VALUE"],
+                ["VAR", "$VALUE", ["CALC", "{{$SELECTED_VALUE}}"]],
+                ["VALIDATE_GT0", "$VALUE", "DOGS_OF_WAR_TIME_CALLBACK.SELECTED_VALUE"],
+                ["SET", "/arkham/scenarioDogsOfWarTimePassed", "$VALUE"],
+                ["LOGF", "{0}{1} set time passed to {2}.", "$ARGS", "$TARGET_PLAYER", "$VALUE"],
+                ["ACTION_LIST", "Dogs of War Scenario Early Init Continue 1"]
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;
