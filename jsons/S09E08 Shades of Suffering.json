@@ -1,0 +1,195 @@
+{
+    "preBuiltDecks": {
+        "Shades of Suffering Scenario": {
+            "label": "Shades of Suffering Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Shades of Suffering", "Shades of Suffering Scenario Early Init", "Shades of Suffering Scenario Init"]
+            ]
+        },
+        "Shades of Suffering": {
+            "hideFromSearch": true,
+            "label": "Shades of Suffering",
+            "cards": [
+                {"databaseId": "09660", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Shades of Suffering
+                {"databaseId": "09661", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Painful History
+                {"databaseId": "09662", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Restless Dead
+                {"databaseId": "09663", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Fear The Reaper
+                {"databaseId": "09664", "quantity": 1, "loadGroupId": "sharedActStory"},                                //The Lady with the Red Parasol
+                {"databaseId": "09665", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Ghost Light
+                {"databaseId": "09666", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Harvester of Woe
+                {"databaseId": "09667", "quantity": 1, "loadGroupId": "sharedLocations", "left": "55%", "top": "43%"},  //Kuala Lumpur Station: East Wing
+                {"databaseId": "09668", "quantity": 1, "loadGroupId": "sharedLocations", "left": "35%", "top": "43%"},  //Kuala Lumpur Station: West Wing
+                {"databaseId": "09669", "quantity": 1, "loadGroupId": "sharedLocations", "left": "15%", "top": "10%"},  //Selangor Club
+                {"databaseId": "09670", "quantity": 1, "loadGroupId": "sharedLocations", "left": "15%", "top": "76%"},  //Selangor Club Padang
+                {"databaseId": "09671", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Melati's Shop
+                {"databaseId": "09673", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Tin Mine
+                {"databaseId": "09672", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Wayang Kulit Theater
+                {"databaseId": "09674a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Uncanny Shadow (Playful Shadows)
+                {"databaseId": "09674c", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Uncanny Shadow (Timorous Shadows)
+                {"databaseId": "09675a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Buried Miner (A Lost Memento)
+                {"databaseId": "09675c", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Buried Miner (Exhume the Bones)
+                {"databaseId": "09676a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Slain Foreman (Sympathy Pain)
+                {"databaseId": "09676c", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Slain Foreman (Familial Pain)
+                {"databaseId": "09679a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //Tzu San Niang: The Lady with the Red Parasol
+                {"databaseId": "09680a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                              //The Shade Reaper: Harvester of Woe
+                {"databaseId": "09677", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},                           //Excruciate
+                {"databaseId": "09678", "quantity": 3, "loadGroupId": "sharedEncounterDeck"}                            //Spirit Harvest
+            ]
+        }
+    },
+    "actionLists": {
+        "Shades of Suffering Scenario Early Init": [
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Check Campaign Log.", ["LIST", "Flint traveled to Kuala Lumpur.", "Agent Flint is missing."], "Shades of Suffering Scenario Early Init Continue 1"]
+        ],
+        "Shades of Suffering Scenario Early Init Continue 1": [
+            ["LOG", "└── Campaign Log: {{$GAME.arkham.scenarioAnswer1Text}}"],
+            ["SET", "/arkham/scenarioShadesOfSufferingFlintOwner", ""],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["LOG", "└── Campaign Log: Record “Flint rejoined the cell.”"],
+                    ["PROMPT", "$GAME.firstPlayer", "shadesOfSufferingChooseFlintOwner"],
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["VAR", "$ALIAS_I", ["GET_ALIAS", "$PLAYER_I"]],
+                        ["VAR", "$LETTER", ["SUBSTRING", "$PLAYER_I", 6, 1]],
+                        ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "{{$ALIAS_I}}.", "{{$LETTER}}", ["LIST", "SHADES_OF_SUFFERING_FLINT_CHOICE", "{{$GAME.firstPlayer}}", "{{$PLAYER_I}}", "1"]]
+                    ]],
+                    ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "Skip.", "X", ["LIST", "SHADES_OF_SUFFERING_FLINT_CHOICE", "{{$GAME.firstPlayer}}", "{{$GAME.firstPlayer}}", "0"]]
+                ],
+                ["TRUE"],
+                ["SCENARIO_INIT_RESUME", "Shades of Suffering Scenario Init"]
+            ]
+        ],
+        "Shades of Suffering Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Shades of Suffering"],
+            ["DO_SET_SPAWN_LOCATION", "09671", 75, 10], //Melati's Shop
+            ["DO_SET_SPAWN_LOCATION", "09673", 75, 43], //Tin Mine
+            ["DO_SET_SPAWN_LOCATION", "09672", 75, 76], //Wayang Kulit Theater
+            ["DO_LOAD_CARDS_SCN", "Dark Veiling"],
+            ["DO_LOAD_CARDS_SCN", "Mysteries Abound"],
+            ["DO_LOAD_CARDS_SCN", "Scarlet Sorcery"],
+            ["DO_LOAD_CARDS_SCN", "Spreading Corruption"],
+            ["DO_LOAD_CARDS_SCN", "Striking Fear"],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "09669", 5, 7, 3, 0], //Selangor Club
+                    ["COND",
+                        ["NOT_EQUAL", "$GAME.arkham.scenarioShadesOfSufferingFlintOwner", ""],
+                        ["DO_MAY_PUT_INTO_PLAY_FROM_PLAYER_DECK_SCN", "Inspector Flint", "Shades of Suffering Scenario Init Continue 1"],
+                        ["TRUE"],
+                        ["ACTION_LIST", "Shades of Suffering Scenario Init Continue 1"]
+                    ]
+                ],
+                ["TRUE"],
+                [
+                    ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "09668", 5, 7, 3, 0], //Kuala Lumpur Station: West Wing
+                    ["ACTION_LIST", "Shades of Suffering Scenario Init Continue 1"]
+                ]
+            ]
+        ],
+        "Shades of Suffering Scenario Init Continue 1": [
+            ["SHADES_OF_SUFFERING_SPAWN_GEISTS", "09674a", "09674c"], //Uncanny Shadow, Uncanny Shadow
+            ["SHADES_OF_SUFFERING_SPAWN_GEISTS", "09675a", "09675c"], //Buried Miner, Buried Miner
+            ["SHADES_OF_SUFFERING_SPAWN_GEISTS", "09676a", "09676c"], //Slain Foreman, Slain Foreman
+            ["SCARLET_KEYS_CONCEAL", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09679a"], true, null], //Tzu San Niang: The Lady with the Red Parasol
+            ["DO_ATTACH_ID_TO_ID", "09680a", "09679a", true], //The Shade Reaper: Harvester of Woe, Tzu San Niang: The Lady with the Red Parasol
+            ["VAR", "$LOCATIONS", ["LIST", "09667", "09668", "09669", "09670"]], //Kuala Lumpur Station: East Wing, Kuala Lumpur Station: West Wing, Selangor Club, Selangor Club Padang
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                ["UPDATE_VAR", "$LOCATIONS", ["REMOVE_FIRST_FROM_LIST_BY_VALUE", "$LOCATIONS", "09669"]], //Selangor Club
+                ["TRUE"],
+                ["UPDATE_VAR", "$LOCATIONS", ["REMOVE_FIRST_FROM_LIST_BY_VALUE", "$LOCATIONS", "09668"]] //Kuala Lumpur Station: West Wing
+            ],
+            ["VAR", "$CONCEALED", ["CARDS_TO_CARD_IDS", ["FILTER_CARDS", "$CARD", ["AND",
+                ["EQUAL", "$CARD.groupId", "sharedLocations"],
+                ["EQUAL", "$CARD.sides.A.type", "MiniConcealed"]
+            ]]]],
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, 3, 1, [
+                ["DO_SPAWN_NAMED_AT_LOCATION_SCN", "$CONCEALED.[$I]", "$LOCATIONS.[$I]", 5, 7, 1]
+            ]],
+            ["CALCULATOR_PROMPT", "$GAME.firstPlayer", "Enter time passed", 1, 30, 0, "SHADES_OF_SUFFERING_TIME_CALLBACK", "$GAME.firstPlayer", "", ""]
+        ],
+        "Shades of Suffering Scenario Init Continue 2": [
+            ["VAR", "$TO_ADD", 0],
+            ["COND",
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioShadesOfSufferingTimePassed", 27],
+                ["UPDATE_VAR", "$TO_ADD", 9],
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioShadesOfSufferingTimePassed", 19],
+                ["UPDATE_VAR", "$TO_ADD", 6],
+                ["GREATER_EQUAL", "$GAME.arkham.scenarioShadesOfSufferingTimePassed", 12],
+                ["UPDATE_VAR", "$TO_ADD", 3]
+            ],
+            ["COND",
+                ["GREATER_THAN", "$TO_ADD", 0],
+                ["DO_PLACE_RESOURCES_ON_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09680a"], "$TO_ADD", true, null] //The Shade Reaper: Harvester of Woe
+            ],
+            ["COND",
+                ["EQUAL", "$TO_ADD", 9],
+                ["DO_PLACE_DOOM_ON_CURRENT_AGENDA_SCN", 1]
+            ],
+            ["VAR", "$FINAL_MESSAGE", "Off Map is “the shadows” (in play)."],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioShadesOfSufferingFlintOwner", ""],
+                ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Inspector Flint does not take up an ally slot during this scenario."]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    },
+    "functions": {
+        "SHADES_OF_SUFFERING_FLINT_CHOICE": {
+            "args": ["$TARGET_PLAYER", "$CONTROLLER_PLAYER", "$LOG_MESSAGE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "SHADES_OF_SUFFERING_FLINT_CHOICE.TARGET_PLAYER"],
+                ["VALIDATE_PLAYER", "$CONTROLLER_PLAYER", "SHADES_OF_SUFFERING_FLINT_CHOICE.CONTROLLER_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$LOG_MESSAGE", "SHADES_OF_SUFFERING_FLINT_CHOICE.LOG_MESSAGE"],
+                ["COND",
+                    ["EQUAL", "$LOG_MESSAGE", "1"],
+                    [
+                        ["LOGF", "{0} selected {1} to add Inspector Flint to their deck.", "$TARGET_PLAYER", "$CONTROLLER_PLAYER"],
+                        ["DO_CREATE_DECK_MISSING_CARD_SCN", "$CONTROLLER_PLAYER", "Inspector Flint: With Pride and Care", "09762", 1],
+                        ["SET", "/arkham/scenarioShadesOfSufferingFlintOwner", "$CONTROLLER_PLAYER"]
+                    ],
+                    ["TRUE"],
+                    ["LOGF", "{0} selected no one to add Inspector Flint to their deck.", "$TARGET_PLAYER"]
+                ],
+                ["SCENARIO_INIT_RESUME", "Shades of Suffering Scenario Init"]
+            ]
+        },
+        "SHADES_OF_SUFFERING_TIME_CALLBACK": {
+            "args": ["$TARGET_PLAYER", "$TARGET_CARD_ID", "$ARGS", "$ACTOR_PLAYER", "$SELECTED_VALUE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "SHADES_OF_SUFFERING_TIME_CALLBACK.TARGET_PLAYER"],
+                ["VALIDATE_NOT_NULL", "$ARGS", "SHADES_OF_SUFFERING_TIME_CALLBACK.ARGS"],
+                ["VALIDATE_NOT_EMPTY", "$SELECTED_VALUE", "SHADES_OF_SUFFERING_TIME_CALLBACK.SELECTED_VALUE"],
+                ["VAR", "$VALUE", ["CALC", "{{$SELECTED_VALUE}}"]],
+                ["VALIDATE_GT0", "$VALUE", "SHADES_OF_SUFFERING_TIME_CALLBACK.SELECTED_VALUE"],
+                ["SET", "/arkham/scenarioShadesOfSufferingTimePassed", "$VALUE"],
+                ["LOGF", "{0}{1} set time passed to {2}.", "$ARGS", "$TARGET_PLAYER", "$VALUE"],
+                ["ACTION_LIST", "Shades of Suffering Scenario Init Continue 2"]
+            ]
+        },
+        "SHADES_OF_SUFFERING_SPAWN_GEISTS": {
+            "args": ["$TARGET_DATABASE_ID1", "$TARGET_DATABASE_ID2"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$TARGET_DATABASE_ID1", "SHADES_OF_SUFFERING_SPAWN_GEISTS.TARGET_DATABASE_ID1"],
+                ["VALIDATE_NOT_EMPTY", "$TARGET_DATABASE_ID2", "SHADES_OF_SUFFERING_SPAWN_GEISTS.TARGET_DATABASE_ID2"],
+                ["VAR", "$GEISTS", ["SHUFFLE_LIST", ["LIST", "{{$TARGET_DATABASE_ID1}}", "{{$TARGET_DATABASE_ID2}}"]]],
+                ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "{{$GEISTS.[0]}}"], true, null]
+            ]
+        }
+    },
+    "prompts": {
+        "shadesOfSufferingChooseFlintOwner": {
+            "args": [],
+            "message": "Select the investigator to add Inspector Flint to their deck.",
+            "options": [
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;
