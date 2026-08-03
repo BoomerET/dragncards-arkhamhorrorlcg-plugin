@@ -143,15 +143,16 @@
             "hideFromSearch": true,
             "label": "Beyond the Beyond",
             "cards": [
-                {"databaseId": "09747a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Rambling Route
-                {"databaseId": "09747b", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Rambling Route
-                {"databaseId": "09747c", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Rambling Route
-                {"databaseId": "09748a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Alien Frontier
-                {"databaseId": "09748b", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Alien Frontier
-                {"databaseId": "09749a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Weald of Effigies
-                {"databaseId": "09749b", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Weald of Effigies
-                {"databaseId": "09750", "quantity": 2, "loadGroupId": "sharedNotInPlay"},   //Cliffs of Insanity
-                {"databaseId": "09751", "quantity": 2, "loadGroupId": "sharedNotInPlay"}    //Paradimensional Terror
+                //cards created dynamically in S09E09 Without a Trace
+                //{"databaseId": "09747a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Rambling Route
+                //{"databaseId": "09747b", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Rambling Route
+                //{"databaseId": "09747c", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Rambling Route
+                //{"databaseId": "09748a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Alien Frontier
+                //{"databaseId": "09748b", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Alien Frontier
+                //{"databaseId": "09749a", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Weald of Effigies
+                //{"databaseId": "09749b", "quantity": 1, "loadGroupId": "sharedNotInPlay"},  //Weald of Effigies
+                //{"databaseId": "09750", "quantity": 2, "loadGroupId": "sharedNotInPlay"},   //Cliffs of Insanity
+                {"databaseId": "09751", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}  //Paradimensional Terror
             ]
         },
         "Red Coterie": {
@@ -362,6 +363,7 @@
                 ["VALIDATE_GE0", "$LEFT", "SCARLET_KEYS_SPAWN_CONCEALED.LEFT"],
                 ["VALIDATE_GE0", "$TOP", "SCARLET_KEYS_SPAWN_CONCEALED.TOP"],
                 ["VALIDATE_BOOLEAN", "$LOG_EVENT", "SCARLET_KEYS_SPAWN_CONCEALED.LOG_EVENT"],
+                ["DEFINE", "$SCARLET_KEYS_SPAWN_CONCEALED_RESULT", null],
                 ["COND",
                     ["SCARLET_KEYS_CAN_SPAWN_CONCEALED", "$TARGET_PLAYER", "$DATABASE_ID", "$ACTOR_PLAYER"],
                     [
@@ -377,7 +379,8 @@
                             ["EQUAL", "$SPAWN_HIDDEN", true],
                             ["DO_FLIP_FACEDOWN", "$TARGET_PLAYER", "$CREATED_CARD_ID", false, null]
                         ],
-                        ["DO_LOG", "$LOG_EVENT", "$ACTOR_PLAYER", "$TARGET_PLAYER", "spawn a {{$CARD_NAME}}.", "spawns a {{$CARD_NAME}}."]
+                        ["DO_LOG", "$LOG_EVENT", "$ACTOR_PLAYER", "$TARGET_PLAYER", "spawn a {{$CARD_NAME}}.", "spawns a {{$CARD_NAME}}."],
+                        ["DEFINE", "$SCARLET_KEYS_SPAWN_CONCEALED_RESULT", "$CREATED_CARD_ID"]
                     ]
                 ]
             ]

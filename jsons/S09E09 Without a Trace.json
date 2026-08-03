@@ -1,0 +1,172 @@
+{
+    "preBuiltDecks": {
+        "Without a Trace Scenario": {
+            "label": "Without a Trace Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Without a Trace", "Without a Trace Scenario Early Init", "Without a Trace Scenario Init"]
+            ]
+        },
+        "Without a Trace": {
+            "hideFromSearch": true,
+            "label": "Without a Trace",
+            "cards": [
+                {"databaseId": "09681", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Without a Trace
+                {"databaseId": "09682", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Otherworldly Horror
+                {"databaseId": "09683", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Otherworldly Lambs
+                {"databaseId": "09684", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Otherworldly Slaughter
+                {"databaseId": "09685", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Traversing the Outside
+                {"databaseId": "09686", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Red Ruin
+                {"databaseId": "09687", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Escaping the Otherworld
+                {"databaseId": "09688", "quantity": 1, "loadGroupId": "sharedLocations", "left": "45%", "top": "43%"},  //Court of the Outsiders
+                {"databaseId": "09692", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //The Red-Gloved Man: He Was Always There
+                {"databaseId": "09690", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Mimetic Nemesis: Otherworldly Subjugator
+                {"databaseId": "09691", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Protoplasmic Reassembler
+                {"databaseId": "09693", "quantity": 1, "loadGroupId": "sharedEncounterDeck"}                            //Aliki Zoni Uperetria: The Maid with the Scarlet Sash
+            ]
+        }
+    },
+    "actionLists": {
+        "Without a Trace Scenario Early Init": [
+            ["SET", "/arkham/scenarioWithoutATraceQuinnOwner", ""],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Decide.", ["LIST", "Blow the whistle and summon Aliki to your side.", "Dispose of the whistle and do this alone."], "Without a Trace Scenario Early Init Continue 1"]
+        ],
+        "Without a Trace Scenario Early Init Continue 1": [
+            ["LOG", "└── Decision: {{$GAME.arkham.scenarioAnswer1Text}}"],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["LOG", "└── Campaign Log: Record “the cell blew the whistle.”"],
+                    ["SCENARIO_INIT_RESUME", "Without a Trace Scenario Init"]
+                ],
+                ["TRUE"],
+                [
+                    ["LOG", "└── Campaign Log: Record “Agent Quinn has your back” and “the cell threw away the whistle.”"],
+                    ["PROMPT", "$GAME.firstPlayer", "withoutATraceChooseQuinnOwner"],
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["VAR", "$ALIAS_I", ["GET_ALIAS", "$PLAYER_I"]],
+                        ["VAR", "$LETTER", ["SUBSTRING", "$PLAYER_I", 6, 1]],
+                        ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "{{$ALIAS_I}}.", "{{$LETTER}}", ["LIST", "WITHOUT_A_TRACE_QUINN_CHOICE", "{{$GAME.firstPlayer}}", "{{$PLAYER_I}}", "1"]]
+                    ]],
+                    ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "Skip.", "X", ["LIST", "WITHOUT_A_TRACE_QUINN_CHOICE", "{{$GAME.firstPlayer}}", "{{$GAME.firstPlayer}}", "0"]]
+                ]
+            ]
+        ],
+        "Without a Trace Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Without a Trace"],
+            ["DO_LOAD_CARDS_SCN", "Agents of the Outside"],
+            ["DO_LOAD_CARDS_SCN", "Beyond the Beyond"],
+            ["DO_LOAD_CARDS_SCN", "Outsiders"],
+            ["DO_LOAD_CARDS_SCN", "Secret War"],
+            ["DO_LOAD_CARDS_SCN", "Spreading Corruption"],
+            ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "09688", 5, 7, 3, 0], //Court of the Outsiders
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
+                [
+                    ["PROMPT", "$GAME.firstPlayer", "withoutATraceChooseAlikiOwner"],
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["VAR", "$ALIAS_I", ["GET_ALIAS", "$PLAYER_I"]],
+                        ["VAR", "$LETTER", ["SUBSTRING", "$PLAYER_I", 6, 1]],
+                        ["PROMPT_ADD_OPTION", "$GAME.firstPlayer", "{{$ALIAS_I}}.", "{{$LETTER}}", ["LIST", "WITHOUT_A_TRACE_ALIKI_CHOICE", "{{$GAME.firstPlayer}}", "{{$PLAYER_I}}", "1"]]
+                    ]]
+                ],
+                ["TRUE"],
+                [
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09693"], true, null], //Aliki Zoni Uperetria: The Maid with the Scarlet Sash
+                    ["ACTION_LIST", "Without a Trace Scenario Init Continue 1"]
+                ]
+            ]
+        ],
+        "Without a Trace Scenario Init Continue 1": [
+            ["DO_MOVE_NAMED_DECK_CARDS_SCN", "Apocalyptic Presage", "sharedEncounterDeck", 1, "sharedNotInPlay"],
+            ["VAR", "$OTHERWORLD_TOP", ["SHUFFLE_LIST", ["LIST", "09747a", "09747b", "09747c", "09748a", "09748b", "09749a", "09749b"]]], //Rambling Route, Rambling Route, Rambling Route, Alien Frontier, Alien Frontier, Weald of Effigies, Weald of Effigies
+            ["VAR", "$OTHERWORLD_USE", 7],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.numPlayers", 1],
+                ["UPDATE_VAR", "$OTHERWORLD_USE", 5],
+                ["EQUAL", "$GAME.arkham.numPlayers", 2],
+                ["UPDATE_VAR", "$OTHERWORLD_USE", 6]
+            ],
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, "$OTHERWORLD_USE", 1, [
+                ["DO_CREATE_CARDS_SCN", "City of Remnants", "$OTHERWORLD_TOP.[$I]", 1, "sharedDeckA"]
+            ]],
+            ["FOR_EACH_START_STOP_STEP", "$I", "$OTHERWORLD_USE", 7, 1, [
+                ["DO_CREATE_CARDS_SCN", "City of Remnants", "$OTHERWORLD_TOP.[$I]", 1, "sharedRemoved"]
+            ]],
+            ["VAR", "$OTHERWORLD_BOTTOM", ["SHUFFLE_LIST", ["LIST", "09689", "09750", "09750"]]], //Outsiders' Lair, Cliffs of Insanity, Cliffs of Insanity
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, 3, 1, [
+                ["DO_CREATE_CARDS_SCN", "City of Remnants", "$OTHERWORLD_BOTTOM.[$I]", 1, "sharedDeckA"]
+            ]],
+            ["SET", "/arkham/skipShufflingSharedDeckA", true],
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, 3, 1, [
+                ["DO_MOVE_TO_GROUP_SCN", ["GET_TOP_CARD_ID", "sharedDeckA"], "sharedOffMap"]
+            ]],
+            ["VAR", "$CONCEALED", ["SHUFFLE_LIST", ["LIST", "concealed_city_l", "concealed_city_m", "concealed_city_r", "concealed_decoy"]]], //City of Remnants (L), City of Remnants (M), City of Remnants (R), Decoy
+            ["VAR", "$LEFTS", ["LIST", 47, 59, 47, 35]],
+            ["VAR", "$TOPS", ["LIST", 28, 46, 63, 46]],
+            ["FOR_EACH_START_STOP_STEP", "$I", 0, 4, 1, [
+                ["SCARLET_KEYS_SPAWN_CONCEALED", "$GAME.firstPlayer", "$CONCEALED.[$I]", true, "$LEFTS.[$I]", "$TOPS.[$I]", true, null],
+                ["DO_SEND_TO_BACK", "$GAME.firstPlayer", "$SCARLET_KEYS_SPAWN_CONCEALED_RESULT", false, null]
+            ]],
+            ["VAR", "$FINAL_MESSAGE", "Deck A is the Otherworld deck. Off Map is “the shadows” (in play). See “Location Adjacency in the Realm of the Outsiders” and “Locations in the Shadows.”"],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioWithoutATraceQuinnOwner", ""],
+                ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Agent Ari Quinn does not take up an ally slot during this scenario."]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    },
+    "functions": {
+        "WITHOUT_A_TRACE_QUINN_CHOICE": {
+            "args": ["$TARGET_PLAYER", "$CONTROLLER_PLAYER", "$LOG_MESSAGE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "WITHOUT_A_TRACE_QUINN_CHOICE.TARGET_PLAYER"],
+                ["VALIDATE_PLAYER", "$CONTROLLER_PLAYER", "WITHOUT_A_TRACE_QUINN_CHOICE.CONTROLLER_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$LOG_MESSAGE", "WITHOUT_A_TRACE_QUINN_CHOICE.LOG_MESSAGE"],
+                ["COND",
+                    ["EQUAL", "$LOG_MESSAGE", "1"],
+                    [
+                        ["LOGF", "{0} selected {1} to add Agent Ari Quinn to their deck.", "$TARGET_PLAYER", "$CONTROLLER_PLAYER"],
+                        ["DO_CREATE_DECK_MISSING_CARD_SCN", "$CONTROLLER_PLAYER", "Agent Ari Quinn: Foundation Researcher", "09763", 1],
+                        ["SET", "/arkham/scenarioWithoutATraceQuinnOwner", "$CONTROLLER_PLAYER"]
+                    ],
+                    ["TRUE"],
+                    ["LOGF", "{0} selected no one to add Agent Ari Quinn to their deck.", "$TARGET_PLAYER"]
+                ],
+                ["SCENARIO_INIT_RESUME", "Without a Trace Scenario Init"]
+            ]
+        },
+        "WITHOUT_A_TRACE_ALIKI_CHOICE": {
+            "args": ["$TARGET_PLAYER", "$CONTROLLER_PLAYER", "$LOG_MESSAGE"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "WITHOUT_A_TRACE_ALIKI_CHOICE.TARGET_PLAYER"],
+                ["VALIDATE_PLAYER", "$CONTROLLER_PLAYER", "WITHOUT_A_TRACE_ALIKI_CHOICE.CONTROLLER_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$LOG_MESSAGE", "WITHOUT_A_TRACE_ALIKI_CHOICE.LOG_MESSAGE"],
+                ["COND",
+                    ["EQUAL", "$LOG_MESSAGE", "1"],
+                    ["LOGF", "{0} selected {1} to take control of Aliki Zoni Uperetria.", "$TARGET_PLAYER", "$CONTROLLER_PLAYER"]
+                ],
+                ["DO_PUT_INTO_PLAY_SCN", ["GET_NAMED_CARD_ID", "09693"], ["GET_CONTROLLER_PLAY", "$CONTROLLER_PLAYER"]], //Aliki Zoni Uperetria: The Maid with the Scarlet Sash
+                ["ACTION_LIST", "Without a Trace Scenario Init Continue 1"]
+            ]
+        }
+    },
+    "prompts": {
+        "withoutATraceChooseQuinnOwner": {
+            "args": [],
+            "message": "Select the investigator to add Agent Ari Quinn to their deck.",
+            "options": [
+            ]
+        },
+        "withoutATraceChooseAlikiOwner": {
+            "args": [],
+            "message": "Select the investigator to take control of Aliki Zoni Uperetria.",
+            "options": [
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;

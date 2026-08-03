@@ -42,11 +42,11 @@
     },
     "actionLists": {
         "Shades of Suffering Scenario Early Init": [
+            ["SET", "/arkham/scenarioShadesOfSufferingFlintOwner", ""],
             ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Check Campaign Log.", ["LIST", "Flint traveled to Kuala Lumpur.", "Agent Flint is missing."], "Shades of Suffering Scenario Early Init Continue 1"]
         ],
         "Shades of Suffering Scenario Early Init Continue 1": [
             ["LOG", "└── Campaign Log: {{$GAME.arkham.scenarioAnswer1Text}}"],
-            ["SET", "/arkham/scenarioShadesOfSufferingFlintOwner", ""],
             ["COND",
                 ["EQUAL", "$GAME.arkham.scenarioAnswer1", "A"],
                 [
