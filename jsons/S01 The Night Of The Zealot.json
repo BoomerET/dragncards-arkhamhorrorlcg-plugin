@@ -25,6 +25,14 @@
                 {"databaseId": "01165", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}    //Dissonant Voices
             ]
         },
+        "Striking Fear - No Rotting Remains": {
+            "hideFromSearch": true,
+            "label": "Striking Fear - No Rotting Remains",
+            "cards": [
+                {"databaseId": "01164", "quantity": 2, "loadGroupId": "sharedEncounterDeck"},   //Frozen in Fear
+                {"databaseId": "01165", "quantity": 2, "loadGroupId": "sharedEncounterDeck"}    //Dissonant Voices
+            ]
+        },
         "Ancient Evils": {
             "hideFromSearch": true,
             "label": "Ancient Evils",
