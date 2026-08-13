@@ -288,6 +288,7 @@
                     ["VAR", "$YEAS", ["SHUFFLE_LIST", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES", 1, false]]],
                     //The lead investigator spawns The Red-Gloved Man in the shadows and resolves its concealed keyword (as granted by act 1a).
                     ["CONGRESS_OF_THE_KEYS_SPAWN_RED_GLOVED_MAN"],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing The Red-Gloved Man’s concealed mini-cards."],
                     //Shuffle the rest of the gathered Coterie enemies. One at a time, in player order, each investigator other than the lead investigator draws 1 of them, spawning them as normal.
                     ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
                         ["COND",
@@ -300,13 +301,17 @@
                             ]
                         ]
                     ]],
+                    ["COND",
+                        ["GREATER_THAN", "$GAME.arkham.numPlayers", 1],
+                        ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} In player order, each investigator (other than lead investigator) must finish spawning the Coterie enemy in their Hand."]
+                    ],
                     //Shuffle the rest of the gathered Coterie enemies (those not drawn in the previous step) into the encounter deck.
                     ["FOR_EACH_VAL", "$DATABASE_ID", "$YEAS", [
                         ["DO_CREATE_CARDS_SCN", ["GET_DATABASE_NAME", null, "$DATABASE_ID", false], "$DATABASE_ID", 1, "sharedEncounterDeck"]
                     ]],
                     //For each member of the Coterie who voted “nay,” find their Conspirator story asset version and put them into play under any investigator’s control.
                     ["CONGRESS_OF_THE_KEYS_SPAWN_CONSPIRATORS", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_CONSPIRATORS", 2, false]],
-                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing The Red-Gloved Man’s concealed mini-cards. In player order, each investigator must finish spawning the Coterie enemy in their Hand. Put the Conspirator story assets in play under any investigator’s control."]
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Put the Conspirator story assets in play under any investigator’s control."]
                 ],
                 ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 2],
                 [
@@ -325,6 +330,7 @@
                     ["VAR", "$SILENTS", ["SHUFFLE_LIST", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES", 4, false]]],
                     //The lead investigator spawns The Red-Gloved Man in the shadows and resolves its concealed keyword (as granted by act 1a).
                     ["CONGRESS_OF_THE_KEYS_SPAWN_RED_GLOVED_MAN"],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing The Red-Gloved Man’s concealed mini-cards."],
                     //Shuffle the rest of the gathered Coterie enemies. One at a time, in player order, each investigator other than the lead investigator draws 1 of them, spawning them as normal.
                     ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
                         ["COND",
@@ -337,7 +343,10 @@
                             ]
                         ]
                     ]],
-                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing The Red-Gloved Man’s concealed mini-cards. In player order, each investigator must finish spawning the Coterie enemy in their Hand."],
+                    ["COND",
+                        ["GREATER_THAN", "$GAME.arkham.numPlayers", 1],
+                        ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} In player order, each investigator (other than lead investigator) must finish spawning the Coterie enemy in their Hand."]
+                    ],
                     //Shuffle the rest of the gathered Coterie enemies (those not drawn in the previous step) into the encounter deck.
                     ["FOR_EACH_VAL", "$DATABASE_ID", "$SILENTS", [
                         ["DO_CREATE_CARDS_SCN", ["GET_DATABASE_NAME", null, "$DATABASE_ID", false], "$DATABASE_ID", 1, "sharedEncounterDeck"]
