@@ -635,6 +635,21 @@
                     ]
                 ]
             ]
+        },
+        "GET_DATABASE_NAME": {
+            "args": ["$TARGET_NAME", "$TARGET_DATABASE_ID", "$FLIP_FIRST"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$TARGET_DATABASE_ID", "GET_DATABASE_NAME.TARGET_DATABASE_ID"],
+                ["VALIDATE_BOOLEAN", "$FLIP_FIRST", "GET_DATABASE_NAME.FLIP_FIRST"],
+                ["COND",
+                    ["NOT_EQUAL", "$TARGET_NAME", null],
+                    "$TARGET_NAME",
+                    ["EQUAL", "$FLIP_FIRST", true],
+                    "$CARD_DB.{{$TARGET_DATABASE_ID}}.B.name",
+                    ["TRUE"],
+                    "$CARD_DB.{{$TARGET_DATABASE_ID}}.A.name"
+                ]
+            ]
         }
     }
 }

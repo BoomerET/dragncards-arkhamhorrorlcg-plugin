@@ -1,0 +1,575 @@
+{
+    "preBuiltDecks": {
+        "Congress of the Keys Scenario": {
+            "label": "Congress of the Keys Scenario",
+            "cards": [
+
+            ],
+            "postLoadActionList": [
+                ["SCARLET_KEYS_SCENARIO_INIT", "Congress of the Keys", "Congress of the Keys Scenario Early Init", "Congress of the Keys Scenario Init"]
+            ]
+        },
+        "Congress of the Keys": {
+            "hideFromSearch": true,
+            "label": "Congress of the Keys",
+            "cards": [
+                {"databaseId": "09694", "quantity": 1, "loadGroupId": "sharedScenarioReference"},                       //Congress of the Keys
+                {"databaseId": "09695", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Conflux of Consequence
+                {"databaseId": "09696", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //The World Unbidden
+                {"databaseId": "09697", "quantity": 1, "loadGroupId": "sharedAgendaStory"},                             //Running Red
+                {"databaseId": "09698", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Secrets and Lies (v. I)
+                {"databaseId": "09699", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Secrets and Lies (v. II)
+                {"databaseId": "09700", "quantity": 1, "loadGroupId": "sharedActStory"},                                //Secrets and Lies (v. III)
+                {"databaseId": "09701", "quantity": 1, "loadGroupId": "sharedActStory"},                                //To the Tower
+                {"databaseId": "09702", "quantity": 1, "loadGroupId": "sharedActStory"},                                //The Ascent
+                {"databaseId": "09703", "quantity": 1, "loadGroupId": "sharedActStory"},                                //The Final Err
+                {"databaseId": "09704", "quantity": 1, "loadGroupId": "sharedLocations", "left": "45%", "top": "24%"},  //Scarlet Halls (Sanctum.)
+                {"databaseId": "09705", "quantity": 1, "loadGroupId": "sharedLocations", "left": "45%", "top": "24%"},  //Scarlet Halls (Lair.)
+                {"databaseId": "concealed_city_l", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                    //City of Remnants (L)
+                {"databaseId": "concealed_city_m", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                    //City of Remnants (M)
+                {"databaseId": "concealed_city_r", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                    //City of Remnants (R)
+                {"databaseId": "09712", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //The Knotted Tower
+                {"databaseId": "09713", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //Gravity-Defying Climb
+                {"databaseId": "09714", "quantity": 1, "loadGroupId": "sharedNotInPlay"},                               //The Towering Vertex: Ruinous Conflux
+                {"databaseId": "09715", "quantity": 1, "loadGroupId": "sharedNotInPlay"}                                //Mimetic Nemesis: Infiltrator of Realities
+            ]
+        }
+    },
+    "actionLists": {
+        "Congress of the Keys Scenario Early Init": [
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteClaretKnight", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteBeastInACowlOfCrimson", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysBearerTheLightOfPharos", null],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteEceSahin", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteAmaranth", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteRazinFarhi", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysBearerTheLastBlossom", null],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteThorne", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysBearerTheSableGlass", null],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteAliki", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteDesiderio", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysBearerTheMirroringBlade", null],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteAbarran", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteRedGlovedMan", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteLaChicaRoja", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteTheSanguineWatcher", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysBearerTheWeepingLady", null],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteTzuSanNiang", 0],
+            ["SET", "/arkham/scenarioCongressOfTheKeysBearerTheShadeReaper", null],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVoteTuwileMasai", 0],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "The cell aided the knight.", "The cell failed to fend off the Beast.", "You haven’t seen the last of the Claret Knight.", "The dogs are at war.", "None of the above are true."], "Congress of the Keys Scenario Early Init Continue 1"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 1": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 1],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 1, "The Claret Knight", "ClaretKnight", {"A":20, "B":31, "C":10, "D":31, "E":20}],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 1, "The Beast in a Cowl of Crimson", "BeastInACowlOfCrimson", {"A":31, "B":10, "C":10, "D":31, "E":10}],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer1", "E"],
+                ["COND",
+                    ["EQUAL", ["RANDOM_INT", 1, 2], 1],
+                    ["CONGRESS_OF_THE_KEYS_BEARER", "The Claret Knight", "The Light of Pharos", "TheLightOfPharos", "Knight"],
+                    ["TRUE"],
+                    ["CONGRESS_OF_THE_KEYS_BEARER", "The Beast in a Cowl of Crimson", "The Light of Pharos", "TheLightOfPharos", "Beast"]
+                ]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "Ece trusts the cell.", "Ece does not trust the cell.", "Neither of the above are true."], "Congress of the Keys Scenario Early Init Continue 2"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 2": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 2],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 2, "Ece Şahin", "EceSahin", {"A":20, "B":30, "C":20}],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "You haven’t seen the last of Amaranth.", "The lovers are reunited.", "Amaranth has left the Coterie.", "None of the above are true."], "Congress of the Keys Scenario Early Init Continue 3"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 3": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 3],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 3, "Amaranth", "Amaranth", {"A":11, "B":10, "C":31, "D":10}],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 3, "Razin Farhi", "RazinFarhi", {"A":0, "B":10, "C":0, "D":0}],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer3", "D"],
+                ["CONGRESS_OF_THE_KEYS_BEARER", "Amaranth", "The Last Blossom", "TheLastBlossom", "Amaranth"]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "You haven’t seen the last of Thorne.", "The cell made a deal with Thorne.", "Thorne disappeared.", "None of the above are true."], "Congress of the Keys Scenario Early Init Continue 4"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 4": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 4],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 4, "Thorne", "Thorne", {"A":10, "B":20, "C":40, "D":30}],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer4", "D"],
+                ["CONGRESS_OF_THE_KEYS_BEARER", "Thorne", "The Sable Glass", "TheSableGlass", "Thorne"]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "Aliki is on your side.", "You haven’t seen the last of Aliki.", "None of the above are true."], "Congress of the Keys Scenario Early Init Continue 5"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 5": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 5],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 5, "Aliki", "Aliki", {"A":20, "B":40, "C":10}],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "Desi is in your debt.", "The above is not true."], "Congress of the Keys Scenario Early Init Continue 6"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 6": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 6],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer6", "A"],
+                ["LOG", "└── Find the copy of Desiderio Delgado Álvarez you stored in a safe place and look at its other side. Then, proceed."]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "The other side of Desiderio Delgado Álvarez is his story asset version.", "You haven’t seen the last of Desiderio Delgado Álvarez.", "The other side of Desiderio Delgado Álvarez is an encounter card back.", "None of the above are true."], "Congress of the Keys Scenario Early Init Continue 7"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 7": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 7],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 7, "Desiderio Delgado Álvarez", "Desiderio", {"A":20, "B":40, "C":10}],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer7", "C"],
+                ["CONGRESS_OF_THE_KEYS_BEARER", "Desiderio Delgado Álvarez", "The Mirroring Blade", "TheMirroringBlade", "Desiderio"]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "The cell meddled in Abarran’s affairs.", "The above is not true."], "Congress of the Keys Scenario Early Init Continue 8"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 8": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 8],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 8, "Abarran Arrigorriagakoa", "Abarran", {"A":10, "B":30}],
+            ["CONGRESS_OF_THE_KEYS_VOTE_RESULT", "The Red-Gloved Man", "RedGlovedMan", 40],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "The cell knows the true nature of the Coterie.", "The above is not true."], "Congress of the Keys Scenario Early Init Continue 9"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 9": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 9],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer9", "A"],
+                [
+                    ["SET", "/arkham/scenarioCongressOfTheKeysVariant", 36], //The Trial 6
+                    ["LOG", "└── Campaign Log: Record “the Red Coterie spared the cell.”"],
+                    ["SCENARIO_SKIP_QUESTIONS", 4, "Congress of the Keys Scenario Early Init Continue 15"]
+                ],
+                ["GREATER_EQUAL", ["CONGRESS_OF_THE_KEYS_COUNT", 4], 3],
+                [
+                    ["SET", "/arkham/scenarioCongressOfTheKeysVariant", 37], //The Trial 7
+                    ["LOG", "└── Campaign Log: Record “the Red Coterie was destroyed from within.”"],
+                    ["SCENARIO_SKIP_QUESTIONS", 4, "Congress of the Keys Scenario Early Init Continue 15"]
+                ],
+                ["TRUE"],
+                ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "You haven’t seen the last of La Chica Roja.", "You haven’t seen the last of the Sanguine Watcher.", "The Sanguine Watcher’s torment continues.", "None of the above are true."], "Congress of the Keys Scenario Early Init Continue 10"]
+            ]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 10": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 10],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 10, "La Chica Roja", "LaChicaRoja", {"A":30, "B":20, "C":20, "D":30}],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 10, "The Sanguine Watcher", "TheSanguineWatcher", {"A":10, "B":10, "C":31, "D":30}],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer10", "D"],
+                ["CONGRESS_OF_THE_KEYS_BEARER", "The Sanguine Watcher", "The Weeping Lady", "TheWeepingLady", "Watcher"]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "You haven’t seen the last of Tzu San Niang.", "Tzu San Niang has you under her sway.", "Tzu San Niang is under your sway.", "Neither of the above are true."], "Congress of the Keys Scenario Early Init Continue 11"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 11": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 11],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 11, "Tzu San Niang", "TzuSanNiang", {"A":11, "B":12, "C":31, "D":10}],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer11", "D"],
+                ["CONGRESS_OF_THE_KEYS_BEARER", "Tzu San Niang", " The Shade Reaper", "TheShadeReaper", "Tzu"]
+            ],
+            ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "The Trial.", ["LIST", "Tuwile Masai is on your side.", "The above is not true."], "Congress of the Keys Scenario Early Init Continue 12"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 12": [
+            ["CONGRESS_OF_THE_KEYS_TRIAL", 12],
+            ["CONGRESS_OF_THE_KEYS_VOTE", 12, "Tuwile Masai", "TuwileMasai", {"A":20, "B":10}],
+            ["VAR", "$YEAS", ["CONGRESS_OF_THE_KEYS_COUNT", 1]],
+            ["VAR", "$NAYS", ["CONGRESS_OF_THE_KEYS_COUNT", 2]],
+            ["COND",
+                ["GREATER_EQUAL", "$YEAS", "$NAYS"],
+                [
+                    ["SET", "/arkham/scenarioCongressOfTheKeysVariant", 12], //The Trial 2
+                    ["LOG", "└── Campaign Log: Record “the cell escaped the Red Coterie.”"],
+                    ["SCENARIO_SKIP_QUESTION", "Congress of the Keys Scenario Early Init Continue 15"]
+                ],
+                ["AND",
+                    ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteLaChicaRoja", 2],
+                    ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteEceSahin", 2],
+                    ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteDesiderio", 2]
+                ],
+                ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Decide.", ["LIST", "Try to convince La Chica Roja, Ece Şahin, and Desiderio Delgado Álvarez to overthrow the Coterie.", "Skip."], "Congress of the Keys Scenario Early Init Continue 13"],
+                ["AND",
+                    ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteThorne", 2],
+                    ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteTuwileMasai", 2],
+                    ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteClaretKnight", 2]
+                ],
+                ["ASK_SCENARIO_QUESTION_AND_CONTINUE", "Decide.", ["LIST", "Attempt to join the Coterie.", "Skip."], "Congress of the Keys Scenario Early Init Continue 14"],
+                ["TRUE"],
+                [
+                    ["SET", "/arkham/scenarioCongressOfTheKeysVariant", 25], //The Trial 5 and 8
+                    ["LOG", "└── Campaign Log: Record “The Red Coterie spared the cell.”"],
+                    ["SCENARIO_SKIP_QUESTION", "Congress of the Keys Scenario Early Init Continue 15"]
+                ]
+            ]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 13": [
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer13", "A"],
+                ["LOG", "└── Decision: Try to convince La Chica Roja, Ece Şahin, and Desiderio Delgado Álvarez to overthrow the Coterie."]
+            ],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVariant", 23], //The Trial 3 and 8
+            ["LOG", "└── Campaign Log: Record “the cell overthrew the Red Coterie.”"],
+            ["ACTION_LIST", "Congress of the Keys Scenario Early Init Continue 15"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 14": [
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioAnswer13", "A"],
+                ["LOG", "└── Decision: Attempt to join the Coterie."]
+            ],
+            ["SET", "/arkham/scenarioCongressOfTheKeysVariant", 24], //The Trial 4 and 8
+            ["LOG", "└── Each investigator chooses an article of clothing depicted in their investigator art. Your keys are now bound through this mundane implement through occult esoterica. Its color becomes scarlet-red from now until the end of time.”"],
+            ["LOG", "└── Campaign Log: Record “the cell joined the Red Coterie.”"],
+            ["ACTION_LIST", "Congress of the Keys Scenario Early Init Continue 15"]
+        ],
+        "Congress of the Keys Scenario Early Init Continue 15": [
+            ["SET", "/arkham/scenarioCongressOfTheKeysBaseVariant", ["TO_INT", ["DIVIDE", "$GAME.arkham.scenarioCongressOfTheKeysVariant", 10]]],
+            ["SCENARIO_INIT_RESUME", "Congress of the Keys Scenario Init"]
+        ],
+        "Congress of the Keys Scenario Init": [
+            ["DO_LOAD_CARDS_SCN", "Congress of the Keys"],
+            ["DO_SET_SPAWN_LOCATION", "09712", 26, 81], //The Knotted Tower
+            ["DO_SET_SPAWN_LOCATION", "09713", 45, 81], //Gravity-Defying Climb
+            ["DO_SET_SPAWN_LOCATION", "09714", 64, 81], //The Towering Vertex: Ruinous Conflux
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 1],
+                [
+                    ["DO_LOAD_CARDS_SCN", "Agents of the Outside"],
+                    ["DO_LOAD_CARDS_SCN", "Beyond the Beyond"],
+                    ["DO_LOAD_CARDS_SCN", "Outsiders"]
+                ]
+            ],
+            //["DO_LOAD_CARDS_SCN", "Red Coterie"],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 1],
+                [
+                    ["DO_LOAD_CARDS_SCN", "Scarlet Sorcery"],
+                    ["DO_LOAD_CARDS_SCN", "Spatial Anomaly"]
+                ],
+                ["TRUE"],
+                ["DO_LOAD_CARDS_SCN", "Secret War"]
+            ],
+            ["DO_LOAD_CARDS_SCN", "Spreading Corruption"],
+            ["VAR", "$LOCATIONS_TO_SPAWN", null],
+            ["VAR", "$LOCATIONS_TO_REMOVE", null],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 1],
+                [
+                    ["DO_LOAD_CARDS_SCN", "Locked Doors"],
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09636"], true, null], //Scarlet Halls (Sanctum.)
+                    ["UPDATE_VAR", "$LOCATIONS_TO_SPAWN", ["SHUFFLE_LIST", ["LIST", "09707", "09709", "09711"]]], //Congress Chamber, Coterie Library, The Key Reliquary (Lair.)
+                    ["UPDATE_VAR", "$LOCATIONS_TO_REMOVE", ["LIST", "09706", "09708", "09710"]] //Congress Chamber, Coterie Library, The Key Reliquary (Sanctum.)
+                ],
+                ["TRUE"],
+                [
+                    ["DO_LOAD_CARDS_SCN", "Ancient Evils"],
+                    ["DO_LOAD_CARDS_SCN", "Striking Fear - No Rotting Remains"],
+                    ["CONGRESS_OF_THE_KEYS_OTHERWORLD", "sharedDeckA"],
+                    ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09705"], true, null], //Scarlet Halls (Lair.)
+                    ["UPDATE_VAR", "$LOCATIONS_TO_SPAWN", ["SHUFFLE_LIST", ["LIST", "09706", "09708", "09710"]]], //Congress Chamber, Coterie Library, The Key Reliquary (Sanctum.)
+                    ["UPDATE_VAR", "$LOCATIONS_TO_REMOVE", ["LIST", "09707", "09709", "09711"]] //Congress Chamber, Coterie Library, The Key Reliquary (Lair.)
+                ]
+            ],
+            ["DO_SPAWN_LOCATIONS_SCN", "Coterie Sanctuary", "$LOCATIONS_TO_SPAWN", ["LIST", 26, 45, 64], ["LIST", 43, 43, 43], 0, 3, 0],
+            ["FOR_EACH_VAL", "$DATABASE_ID", "$LOCATIONS_TO_REMOVE", [
+                ["DO_CREATE_CARDS_SCN", "Coterie Sanctuary", "$DATABASE_ID", 1, "sharedRemoved"]
+            ]],
+            ["DO_SPAWN_MINI_INVESTIGATORS_AT_LOCATION", "Scarlet Halls", 5, 7, 3, 0],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 1],
+                ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09698"], true, null]  //Secrets and Lies (v. I)
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 2],
+                ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09699"], true, null]  //Secrets and Lies (v. II)
+            ],
+            ["COND",
+                ["NOT_EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 3],
+                ["DO_REMOVE_CARD", "$GAME.firstPlayer", ["GET_NAMED_CARD_ID", "09699"], true, null]  //Secrets and Lies (v. III)
+            ],
+            ["VAR", "$FINAL_MESSAGE", "Off Map is “the shadows” (in play). See “Location Adjacency in the Realm of the Outsiders” and “Locations in the Shadows” on page 57."],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 1],
+                [
+                    //Find each Coterie enemy from the Red Coterie encounter set who voted “yea,” along with The Red-Gloved Man.
+                    ["VAR", "$YEAS", ["SHUFFLE_LIST", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES", 1, false]]],
+                    //The lead investigator spawns The Red-Gloved Man in the shadows and resolves its concealed keyword (as granted by act 1a).
+                    ["CONGRESS_OF_THE_KEYS_SPAWN_RED_GLOVED_MAN"],
+                    //Shuffle the rest of the gathered Coterie enemies. One at a time, in player order, each investigator other than the lead investigator draws 1 of them, spawning them as normal.
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["COND",
+                            ["NOT_EQUAL", "$PLAYER_I", "$GAME.firstPlayer"],
+                            [
+                                ["VAR", "$NAME", ["GET_DATABASE_NAME", null, "$YEAS.[0]", false]],
+                                ["DO_CREATE_CARDS_SCN", "$NAME", "$YEAS.[0]", 1, "sharedNotInPlay"],
+                                ["DO_MOVE_NAMED_DECK_CARDS_SCN", "$NAME", "sharedNotInPlay", 1, ["GET_CONTROLLER_HAND", "$PLAYER_I"]],
+                                ["UPDATE_VAR", "$YEAS", ["LIST_DELETE_AT", "$YEAS", 0]]
+                            ]
+                        ]
+                    ]],
+                    //Shuffle the rest of the gathered Coterie enemies (those not drawn in the previous step) into the encounter deck.
+                    ["FOR_EACH_VAL", "$DATABASE_ID", "$YEAS", [
+                        ["DO_CREATE_CARDS_SCN", ["GET_DATABASE_NAME", null, "$DATABASE_ID", false], "$DATABASE_ID", 1, "sharedEncounterDeck"]
+                    ]],
+                    //For each member of the Coterie who voted “nay,” find their Conspirator story asset version and put them into play under any investigator’s control.
+                    ["CONGRESS_OF_THE_KEYS_SPAWN_CONSPIRATORS", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_CONSPIRATORS", 2, false]],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing The Red-Gloved Man’s concealed mini-cards. In player order, each investigator must finish spawning the Coterie enemy in their Hand. Put the Conspirator story assets in play under any investigator’s control."]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 2],
+                [
+                    //Find each Coterie enemy from the Red Coterie encounter set who voted “yea,” along with The Red-Gloved Man, and set each of those enemies aside, out of play.
+                    ["VAR", "$YEAS", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES", 1, true]],
+                    ["FOR_EACH_VAL", "$DATABASE_ID", "$YEAS", [
+                        ["DO_CREATE_CARDS_SCN", ["GET_DATABASE_NAME", null, "$DATABASE_ID", false], "$DATABASE_ID", 1, "sharedNotInPlay"]
+                    ]],
+                    //For each member of the Coterie who voted “nay,” find their Conspirator story asset version and put them into play under any investigator’s control.
+                    ["CONGRESS_OF_THE_KEYS_SPAWN_CONSPIRATORS", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_CONSPIRATORS", 2, false]],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Put the Conspirator story assets in play under any investigator’s control."]
+                ],
+                ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 3],
+                [
+                    //Find each Coterie enemy from the Red Coterie encounter set who was eerily silent.
+                    ["VAR", "$SILENTS", ["SHUFFLE_LIST", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES", 4, false]]],
+                    //The lead investigator spawns The Red-Gloved Man in the shadows and resolves its concealed keyword (as granted by act 1a).
+                    ["CONGRESS_OF_THE_KEYS_SPAWN_RED_GLOVED_MAN"],
+                    //Shuffle the rest of the gathered Coterie enemies. One at a time, in player order, each investigator other than the lead investigator draws 1 of them, spawning them as normal.
+                    ["FOR_EACH_VAL", "$PLAYER_I", "$PLAYER_ORDER", [
+                        ["COND",
+                            ["NOT_EQUAL", "$PLAYER_I", "$GAME.firstPlayer"],
+                            [
+                                ["VAR", "$NAME", ["GET_DATABASE_NAME", null, "$SILENTS.[0]", false]],
+                                ["DO_CREATE_CARDS_SCN", "$NAME", "$SILENTS.[0]", 1, "sharedNotInPlay"],
+                                ["DO_MOVE_NAMED_DECK_CARDS_SCN", "$NAME", "sharedNotInPlay", 1, ["GET_CONTROLLER_HAND", "$PLAYER_I"]],
+                                ["UPDATE_VAR", "$SILENTS", ["LIST_DELETE_AT", "$SILENTS", 0]]
+                            ]
+                        ]
+                    ]],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} The lead investigator must finish placing The Red-Gloved Man’s concealed mini-cards. In player order, each investigator must finish spawning the Coterie enemy in their Hand."],
+                    //Shuffle the rest of the gathered Coterie enemies (those not drawn in the previous step) into the encounter deck.
+                    ["FOR_EACH_VAL", "$DATABASE_ID", "$SILENTS", [
+                        ["DO_CREATE_CARDS_SCN", ["GET_DATABASE_NAME", null, "$DATABASE_ID", false], "$DATABASE_ID", 1, "sharedEncounterDeck"]
+                    ]],
+                    //Check the Campaign Log. If the Red Coterie spared the cell, find the Conspirator story asset version of The Red-Gloved Man, along with each other member of the Coterie who was not gathered during the above step. Put each of them into play under any investigator’s control.
+                    ["COND",
+                        ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVariant", 36],
+                        [
+                            ["CONGRESS_OF_THE_KEYS_SPAWN_CONSPIRATORS", ["CONGRESS_OF_THE_KEYS_LIST_VOTING_CONSPIRATORS", -4, true]],
+                            ["UPDATE_VAR", "$FINAL_MESSAGE", "{{$FINAL_MESSAGE}} Put the Conspirator story assets in play under any investigator’s control. For the remainder of this scenario, ignore the unique symbol on both versions of The Red-Gloved Man."]
+                        ]
+                    ]
+                ]
+            ],
+            ["COND",
+                ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysBaseVariant", 1],
+                [
+                    ["DO_LOAD_CARDS_INTO_SCN", "Agents of the Outside", "sharedDeckA"],
+                    ["DO_LOAD_CARDS_INTO_SCN", "Beyond the Beyond", "sharedDeckA"],
+                    ["DO_LOAD_CARDS_INTO_SCN", "Outsiders", "sharedDeckA"],
+                    ["DO_LOAD_CARDS_INTO_SCN", "Secret War", "sharedDeckA"],
+                    ["DO_LOAD_CARDS_INTO_SCN", "Ancient Evils", "sharedDeckA"],
+                    ["DO_LOAD_CARDS_INTO_SCN", "Striking Fear - No Rotting Remains", "sharedDeckA"],
+                    ["CONGRESS_OF_THE_KEYS_OTHERWORLD", "sharedDeckB"],
+                    ["UPDATE_VAR", "$FINAL_MESSAGE", "Deck A is the second encounter deck, Deck B is the Otherworld deck. {{$FINAL_MESSAGE}}"]
+                ],
+                ["TRUE"],
+                ["UPDATE_VAR", "$FINAL_MESSAGE", "Deck A is the Otherworld deck. {{$FINAL_MESSAGE}}"]
+            ],
+            ["SET", "/arkham/finalScenarioMessage", "{{$FINAL_MESSAGE}}"],
+            ["SCENARIO_INIT_CONTINUE", null]
+        ]
+    },
+    "functions": {
+        "CONGRESS_OF_THE_KEYS_TRIAL": {
+            "args": ["$QUESTION"],
+            "code": [
+                ["VALIDATE_GT0", "$QUESTION", "CONGRESS_OF_THE_KEYS_TRIAL.QUESTION"],
+                ["VAR", "$TEXT", "$GAME.arkham.scenarioAnswer{{$QUESTION}}Text"],
+                ["COND",
+                    ["AND",
+                        ["NOT_EQUAL", "$TEXT", "None of the above are true."],
+                        ["NOT_EQUAL", "$TEXT", "Neither of the above are true."],
+                        ["NOT_EQUAL", "$TEXT", "The above is not true."]
+                    ],
+                    ["LOG", "└── The Trial: {{$TEXT}}"]
+                ]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_VOTE_RESULT": {
+            "args": ["$NAME", "$VAR", "$VALUE"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$NAME", "CONGRESS_OF_THE_KEYS_VOTE_RESULT.NAME"],
+                ["VALIDATE_NOT_EMPTY", "$VAR", "CONGRESS_OF_THE_KEYS_VOTE_RESULT.VAR"],
+                ["VALIDATE_GE0", "$VALUE", "CONGRESS_OF_THE_KEYS_VOTE_RESULT.VALUE"],
+                ["COND",
+                    ["EQUAL", "$VALUE", 10],
+                    ["LOG", "└── {{$NAME}} votes “yea.”"],
+                    ["EQUAL", "$VALUE", 11],
+                    ["LOG", "└── {{$NAME}} enthusiastically votes “yea.”"],
+                    ["EQUAL", "$VALUE", 12],
+                    ["LOG", "└── {{$GAME.firstPlayer}} votes “yea” in {{$NAME}}’s stead."],
+                    ["EQUAL", "$VALUE", 20],
+                    ["LOG", "└── {{$NAME}} votes “nay.”"],
+                    ["EQUAL", "$VALUE", 30],
+                    ["LOG", "└── {{$NAME}} abstains."],
+                    ["EQUAL", "$VALUE", 31],
+                    ["LOG", "└── {{$NAME}} abstains by default."],
+                    ["EQUAL", "$VALUE", 40],
+                    ["LOG", "└── {{$NAME}} remains eerily silent."]
+                ],
+                ["SET", "/arkham/scenarioCongressOfTheKeysVote{{$VAR}}", ["TO_INT", ["DIVIDE", "$VALUE", 10]]]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_VOTE": {
+            "args": ["$QUESTION", "$NAME", "$VAR", "$RESULTS"],
+            "code": [
+                ["VALIDATE_GT0", "$QUESTION", "CONGRESS_OF_THE_KEYS_VOTE.QUESTION"],
+                ["VALIDATE_NOT_EMPTY", "$NAME", "CONGRESS_OF_THE_KEYS_VOTE.NAME"],
+                ["VALIDATE_NOT_EMPTY", "$VAR", "CONGRESS_OF_THE_KEYS_VOTE.VAR"],
+                ["VALIDATE_NOT_NULL", "$RESULTS", "CONGRESS_OF_THE_KEYS_VOTE.RESULTS"],
+                ["VAR", "$ANSWER", "$GAME.arkham.scenarioAnswer{{$QUESTION}}"],
+                ["VAR", "$VALUE", ["MAP_GET", "$RESULTS", "$ANSWER", 0]],
+                ["CONGRESS_OF_THE_KEYS_VOTE_RESULT", "$NAME", "$VAR", "$VALUE"]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_BEARER": {
+            "args": ["$BEARER_NAME", "$KEY_NAME", "$VAR", "$VALUE"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$BEARER_NAME", "CONGRESS_OF_THE_KEYS_BEARER.BEARER_NAME"],
+                ["VALIDATE_NOT_EMPTY", "$KEY_NAME", "CONGRESS_OF_THE_KEYS_BEARER.KEY_NAME"],
+                ["VALIDATE_NOT_EMPTY", "$VAR", "CONGRESS_OF_THE_KEYS_BEARER.VAR"],
+                ["VALIDATE_NOT_EMPTY", "$VALUE", "CONGRESS_OF_THE_KEYS_BEARER.VALUE"],
+                ["LOG", "└── {{$BEARER_NAME}} is the bearer of {{$KEY_NAME}}."],
+                ["SET", "/arkham/scenarioCongressOfTheKeysBearer{{$VAR}}", "$VALUE"]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_COUNT": {
+            "args": ["$VALUE"],
+            "code": [
+                ["VALIDATE_GE0", "$VALUE", "CONGRESS_OF_THE_KEYS_COUNT.VALUE"],
+                ["VAR", "$COUNT", 0],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteClaretKnight", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteBeastInACowlOfCrimson", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteEceSahin", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteAmaranth", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteRazinFarhi", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteThorne", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteAliki", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteDesiderio", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteAbarran", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteRedGlovedMan", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteLaChicaRoja", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteTheSanguineWatcher", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteTzuSanNiang", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                ["COND", ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVoteTuwileMasai", "$VALUE"], ["INCREASE_VAR", "$COUNT", 1]],
+                "$COUNT"
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_OTHERWORLD": {
+            "args": ["$TARGET_GROUP_ID"],
+            "code": [
+                ["VAR", "$TARGET_GROUP", ["GET_GROUP_AND_VALIDATE", "$TARGET_GROUP_ID", "CONGRESS_OF_THE_KEYS_OTHERWORLD.TARGET_GROUP_ID"]],
+                ["VAR", "$OTHERWORLD", ["LIST", "09747a", "09747b", "09747c", "09748a", "09748b", "09749a", "09749b", "09750", "09750"]], //Rambling Route, Rambling Route, Rambling Route, Alien Frontier, Alien Frontier, Weald of Effigies, Weald of Effigies, Cliffs of Insanity, Cliffs of Insanity
+                ["FOR_EACH_START_STOP_STEP", "$I", 0, 9, 1, [
+                    ["DO_CREATE_CARDS_SCN", "City of Remnants", "$OTHERWORLD.[$I]", 1, "$TARGET_GROUP_ID"]
+                ]]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE": {
+            "args": ["$LIST", "$VAR", "$VALUE", "$DATABASE_ID"],
+            "code": [
+                ["VALIDATE_NOT_NULL", "$LIST", "CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE.LIST"],
+                ["VALIDATE_NOT_EMPTY", "$VAR", "CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE.VAR"],
+                ["VALIDATE_NOT_NULL", "$VALUE", "CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE.VALUE"],
+                ["VALIDATE_NOT_EMPTY", "$DATABASE_ID", "CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE.DATABASE_ID"],
+                ["COND",
+                    ["AND",
+                        ["GREATER_THAN", "$VALUE", 0],
+                        ["EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVote{{$VAR}}", "$VALUE"]
+                    ],
+                    ["APPEND", "$LIST", "$DATABASE_ID"],
+                    ["AND",
+                        ["LESS_THAN", "$VALUE", 0],
+                        ["NOT_EQUAL", "$GAME.arkham.scenarioCongressOfTheKeysVote{{$VAR}}", ["MULTIPLY", "$VALUE", -1]]
+                    ],
+                    ["APPEND", "$LIST", "$DATABASE_ID"],
+                    ["TRUE"],
+                    "$LIST"
+                ]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES": {
+            "args": ["$VALUE", "$INCLUDE_RED_GLOVED_MAN"],
+            "code": [
+                ["VALIDATE_NOT_NULL", "$VALUE", "CONGRESS_OF_THE_KEYS_LIST_VOTING_ENEMIES.VALUE"],
+                ["VAR", "$LIST", ["LIST"]],
+                ["COND",
+                    ["EQUAL", "$INCLUDE_RED_GLOVED_MAN", null],
+                    ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "RedGlovedMan", "$VALUE", "09752"]], //The Red-Gloved Man: Purpose Unknown
+                    ["EQUAL", "$INCLUDE_RED_GLOVED_MAN", true],
+                    ["UPDATE_VAR", "$LIST", ["APPEND", "$LIST", "09752"]] //The Red-Gloved Man: Purpose Unknown
+                ],
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "LaChicaRoja", "$VALUE", "09753"]], //La Chica Roja: Hot on Your Tail
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "TheSanguineWatcher", "$VALUE", "09754"]], //The Sanguine Watcher: He Sees What Is Not There
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "BeastInACowlOfCrimson", "$VALUE", "09755"]], //The Beast in a Cowl of Crimson: Leaving a Trail of Destruction
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "ClaretKnight", "$VALUE", "09756"]], //The Claret Knight: Holds You in Contempt
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Thorne", "$VALUE", "09757"]], //Thorne: Open to Negotiation
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Desiderio", "$VALUE", "09758"]], //Desiderio Delgado Álvarez: Red in His Ledger
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Amaranth", "$VALUE", "09759"]], //Amaranth: Scarlet Scorn
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "TzuSanNiang", "$VALUE", "09760"]], //Tzu San Niang: A Whisper in Your Ear
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Aliki", "$VALUE", "09761"]], //Aliki Zoni Uperetria: Speaks in Death
+                "$LIST"
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_LIST_VOTING_CONSPIRATORS": {
+            "args": ["$VALUE", "$INCLUDE_RED_GLOVED_MAN"],
+            "code": [
+                ["VALIDATE_NOT_NULL", "$VALUE", "CONGRESS_OF_THE_KEYS_LIST_VOTING_CONSPIRATORS.VALUE"],
+                ["VAR", "$LIST", ["LIST"]],
+                ["COND",
+                    ["EQUAL", "$INCLUDE_RED_GLOVED_MAN", null],
+                    ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "RedGlovedMan", "$VALUE", "09692"]], //The Red-Gloved Man: He Was Always There
+                    ["EQUAL", "$INCLUDE_RED_GLOVED_MAN", true],
+                    ["UPDATE_VAR", "$LIST", ["APPEND", "$LIST", "09692"]] //The Red-Gloved Man: He Was Always There
+                ],
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "LaChicaRoja", "$VALUE", "09557"]], //La Chica Roja: Your Watchful Shadow (side B)
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "EceSahin", "$VALUE", "09584"]], //Ece Şahin: The Vermillion-Veiled Lady
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Desiderio", "$VALUE", "09607a"]], //Desiderio Delgado Álvarez: In Your Debt, Despite it All (side B)
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Thorne", "$VALUE", "09625a"]], //Thorne: Consummate Professional (side B)
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "ClaretKnight", "$VALUE", "09654a"]], //The Claret Knight: Her Sworn Champion (side B)
+                ["UPDATE_VAR", "$LIST", ["CONGRESS_OF_THE_KEYS_APPEND_IF_VOTE", "$LIST", "Aliki", "$VALUE", "09693"]], //Aliki Zoni Uperetria: The Maid with the Scarlet Sash
+                "$LIST"
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_SPAWN_RED_GLOVED_MAN": {
+            "args": [],
+            "code": [
+                ["DO_CREATE_CARDS_SCN", "The Red-Gloved Man: Purpose Unknown", "09752", 1, "sharedNotInPlay"],
+                ["VAR", "$MAN", "{{$GAME.lastLoadedCardIds.[0]}}"],
+                ["SET", "/cardById/$MAN/sides/A/concealed", -1],
+                ["SCARLET_KEYS_CONCEAL", "$GAME.firstPlayer", "$MAN", true, null]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_CONSPIRATOR_B": {
+            "args": ["$DATABASE_ID"],
+            "code": [
+                ["VALIDATE_NOT_EMPTY", "$DATABASE_ID", "CONGRESS_OF_THE_KEYS_CONSPIRATOR_B.DATABASE_ID"],
+                ["COND",
+                    ["OR",
+                        ["EQUAL", "$DATABASE_ID", "09557"],  //La Chica Roja: Your Watchful Shadow (side B)
+                        ["EQUAL", "$DATABASE_ID", "09607a"], //Desiderio Delgado Álvarez: In Your Debt, Despite it All (side B)
+                        ["EQUAL", "$DATABASE_ID", "09625a"], //Thorne: Consummate Professional (side B)
+                        ["EQUAL", "$DATABASE_ID", "09654a"]  //The Claret Knight: Her Sworn Champion (side B)
+                    ],
+                    true,
+                    ["TRUE"],
+                    false
+                ]
+            ]
+        },
+        "CONGRESS_OF_THE_KEYS_SPAWN_CONSPIRATORS": {
+            "args": ["$CONSPIRATORS"],
+            "code": [
+                ["VALIDATE_NOT_NULL", "$CONSPIRATORS", "CONGRESS_OF_THE_KEYS_SPAWN_CONSPIRATORS.CONSPIRATORS"],
+                ["VAR", "$I", 0],
+                ["FOR_EACH_VAL", "$DATABASE_ID", "$CONSPIRATORS", [
+                    ["DO_CREATE_AT_SCN", null, "$DATABASE_ID", ["SUBTRACT", 97, ["MULTIPLY", 5, "$I"]], 3, ["CONGRESS_OF_THE_KEYS_CONSPIRATOR_B", "$DATABASE_ID"]],
+                    ["INCREASE_VAR", "$I", 1]
+                ]]
+            ]
+        }
+    }
+}
+// kate: syntax Dragnlang; scheme Arkham Dark;

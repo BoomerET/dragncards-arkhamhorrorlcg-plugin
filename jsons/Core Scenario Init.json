@@ -611,6 +611,50 @@
                 ["DO_SPAWN_NAMED_AT_LOCATION", "$TARGET_PLAYER", "$TARGET_NAME", "$LOCATION_CARD_NAME", "$LEFT_MOD", "$TOP_MOD", "$ADD_TO_INDEX", true, null]
             ]
         },
+        //Creates new card in sharedLocations at provided position
+        "DO_CREATE_AT": {
+            "args": ["$TARGET_PLAYER", "$TARGET_NAME", "$TARGET_DATABASE_ID", "$LEFT", "$TOP", "$FLIP_FIRST", "$LOG_EVENT", "$ACTOR_PLAYER"],
+            "code": [
+                ["VALIDATE_PLAYER", "$TARGET_PLAYER", "DO_CREATE_AT.TARGET_PLAYER"],
+                ["VALIDATE_NOT_EMPTY", "$TARGET_DATABASE_ID", "DO_CREATE_AT.TARGET_DATABASE_ID"],
+                ["VALIDATE_GE0", "$LEFT", "DO_CREATE_AT.LEFT"],
+                ["VALIDATE_GE0", "$TOP", "DO_CREATE_AT.TOP"],
+                ["VALIDATE_BOOLEAN", "$FLIP_FIRST", "DO_CREATE_AT.FLIP_FIRST"],
+                ["VALIDATE_BOOLEAN", "$LOG_EVENT", "DO_CREATE_AT.LOG_EVENT"],
+                ["DEFINE", "$DO_CREATE_AT_RESULT", null],
+                ["VAR", "$NAME", ["GET_DATABASE_NAME", "$TARGET_NAME", "$TARGET_DATABASE_ID", "$FLIP_FIRST"]],
+                ["DO_CREATE_CARDS", "$TARGET_PLAYER", "$NAME", "$TARGET_DATABASE_ID", 1, "sharedLocations", false, null],
+                ["VAR", "$TARGET_CARD_ID", "{{$GAME.lastLoadedCardIds.[0]}}"],
+                ["VAR", "$TARGET_CARD", "$CARD_BY_ID.$TARGET_CARD_ID"],
+                ["COND",
+                    ["NOT_EQUAL", "$TARGET_CARD", null],
+                    [
+                        ["COND",
+                            ["EQUAL", "$FLIP_FIRST", true],
+                            ["DO_FLIP_FACEDOWN", "$TARGET_PLAYER", "$TARGET_CARD_ID", false, null]
+                        ],
+                        ["DO_LOG", "$LOG_EVENT", "$ACTOR_PLAYER", "$TARGET_PLAYER", "spawn {{$NAME}}.", "spawns {{$NAME}}."],
+                        ["MOVE_CARD", "$TARGET_CARD_ID", "sharedLocations", -1],
+                        ["DO_SET_CARD_LOCATION", "$TARGET_CARD_ID", "$LEFT", "$TOP"],
+                        ["DEFINE", "$DO_CREATE_AT_RESULT", "$TARGET_CARD_ID"]
+                    ]
+                ]
+            ]
+        },
+        //Creates new card in sharedLocations at provided position
+        "DO_CREATE_AT_SCN": {
+            "args": ["$TARGET_NAME", "$TARGET_DATABASE_ID", "$LEFT", "$TOP", "$FLIP_FIRST"],
+            "code": [
+                ["DO_CREATE_AT", "$GAME.firstPlayer", "$TARGET_NAME", "$TARGET_DATABASE_ID", "$LEFT", "$TOP", "$FLIP_FIRST", true, null]
+            ]
+        },
+        //Creates new card in sharedLocations at provided position
+        "DO_CREATE_AT_ACT": {
+            "args": ["$TARGET_PLAYER", "$TARGET_NAME", "$TARGET_DATABASE_ID", "$LEFT", "$TOP", "$FLIP_FIRST"],
+            "code": [
+                ["DO_CREATE_AT", "$TARGET_PLAYER", "$TARGET_NAME", "$TARGET_DATABASE_ID", "$LEFT", "$TOP", "$FLIP_FIRST", true, null]
+            ]
+        },
         "DO_SPAWN_AT_LOCATION": {
             "args": ["$TARGET_PLAYER", "$TARGET_NAME", "$TARGET_DATABASE_ID", "$LOCATION_CARD_NAME", "$LEFT_MOD", "$TOP_MOD", "$LOG_EVENT", "$ACTOR_PLAYER"],
             "code": [
